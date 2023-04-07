@@ -6,6 +6,13 @@ type Data = {
   name: object[]
 }
 
+type Patient = {
+  name:string,
+  surname:string,
+  age:number,
+  gender:boolean
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -13,7 +20,13 @@ export default async function handler(
   const client = await connectToDatabase();
 
   const col = client.db('clinic_06').collection('patients');
-  await col.insertOne({name:"john", surname:"wayne"});
+  const patient:Patient = {
+    name:"Gennady",
+    surname:"Golovkin",
+    age:35,
+    gender:false
+  }
+  await col.insertOne(patient);
   
   const documents = await col.find().toArray();
   await col.find().forEach((doc) => {
