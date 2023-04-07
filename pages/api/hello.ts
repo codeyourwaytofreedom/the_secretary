@@ -17,7 +17,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const client = await connectToDatabase();
+/*   const client = await connectToDatabase();
 
   const col = client.db('clinic_06').collection('patients');
   const patient:Patient = {
@@ -34,5 +34,7 @@ export default async function handler(
   });
   
   res.status(200).json( documents );
-  client.close();
+  client.close(); */
+  console.log(req.body)
+  res.status(200).json( {res:"hiiiii"} );
 }
