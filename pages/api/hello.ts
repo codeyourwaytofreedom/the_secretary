@@ -12,11 +12,11 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
 
-  const db = client.db('sample_guides').collection('planets');
-  await db.insertOne({name:"dünya"});
+  const col = client.db('clinic_06').collection('patients');
+  await col.insertOne({name:"john", surname:"wayne"});
   
-  const documents = await db.find().toArray();
-  await db.find().forEach((doc) => {
+  const documents = await col.find().toArray();
+  await col.find().forEach((doc) => {
     console.log(doc);
   });
   

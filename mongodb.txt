@@ -1,0 +1,28 @@
+import { MongoClient } from "mongodb";
+
+//create a client and connect it: 
+export async function connectToDatabase() {
+  const client = await MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+  return client;
+}
+
+
+
+1) call client creation function and assign to a client variable
+const client = await connectToDatabase();
+
+2) retrieve a database using .db() method
+const data_base = client.db('name_of_the_database');
+
+3) from the retrieved database, access a specific collection.
+const coll = data_base.collection('name_0f_the_collection');
+
+4) .find() returns the items from the collection
+const items_in_collection = coll.find()
+
+you can use foreach method to loop through the result.
+const items_array = coll.find().toArray()
+.toArray() method can use used to convert it to an array.
+
+5) Insert an item into the collection 
+await coll.insertOne({name:"dünya"});

@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+import { MongoClient } from "mongodb";
 
 // Replace the placeholder with your Atlas connection string
 export async function connectToDatabase() {
