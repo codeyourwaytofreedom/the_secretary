@@ -12,8 +12,10 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   
-  const databasesList = await client.db().admin().listDatabases();
-  console.log("Databases:", databasesList.databases.map(db => db.name));
+  //const databasesList = await client.db().admin().listDatabases();
+  //console.log("Databases:", databasesList.databases.map(db => db.name));
 
-  res.status(200).json({ name: databasesList.databases.length.toString()+" the number of databases" });
+  //res.status(200).json({ name: databasesList.databases.length.toString()+" the number of databases" });
+
+  res.status(200).json({ name: " the number of databases" });
 }
