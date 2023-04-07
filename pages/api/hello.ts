@@ -16,5 +16,4 @@ export default async function handler(
   console.log("Databases:", databasesList.databases.map(db => db.name));
 
   res.status(200).json({ name: databasesList.databases.length.toString()+" the number of databases" });
-
 }
