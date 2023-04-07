@@ -11,18 +11,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const client = await connectToDatabase();
-  const databasesList = await client.db().admin().listDatabases();
 
-  const databaseName = 'sample_guides';
-  const collectionName = 'planets';
-
-  const db = client.db(databaseName);
-  const collection = db.collection(collectionName);
-  const documents = await collection.find().toArray();
-
-  console.log(documents)
-
-
-  console.log("Databases:", databasesList.databases.map(db => db.name));
+  const db = client.db('sample_guides').collection('planets');
+  await db.insertOne({name:"dünya"});
+  
+  const documents = await db.find().toArray();
+  await db.find().forEach((doc) => {
+    console.log(doc);
+  });
+  
   res.status(200).json( documents );
+  client.close();
 }
