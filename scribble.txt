@@ -1,0 +1,23 @@
+export async function middleware(request: NextRequest,response:NextResponse) {
+  response = NextResponse.next();
+  const allCookies = request.cookies.getAll();
+  const tokenCookie = allCookies.find(cookie => cookie.name === 'token');
+  console.log("fired",allCookies)
+/*   if(request.url.startsWith("/test")){
+        if (tokenCookie) {
+      const jwt = tokenCookie.value;
+      const secret = new TextEncoder().encode(
+        'skjvwrwr834745',
+      )
+      try {
+        await jose.jwtVerify(jwt, secret);
+        console.log("found")
+        response.headers.set('Authorization', `Bearer ${tokenCookie}`);
+      } catch (error) {
+        console.log(error)
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+      return response;
+    }
+  } */
+}

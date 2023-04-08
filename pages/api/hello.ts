@@ -19,11 +19,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745", {
-    expiresIn: '5s',
-  });
+  const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745");
   
-  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; SameSite=Strict`);
+  //res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/test`);
+  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; SameSite=None; Secure`);
+
   res.status(200).json({ message: 'Cookie set successfully' });
 
 }
