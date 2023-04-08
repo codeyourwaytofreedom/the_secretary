@@ -4,12 +4,19 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 
-
-export function middleware(request: NextRequest) {
-    console.log("hello middleware");
-  return NextResponse.next();
+interface ResponseWithCookies extends NextApiResponse {
+  cookies: any;
 }
 
-/* export const config = {
-  matcher: '/about/:path*',
-} */
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+
+  response.cookies.set("xxx","yyy")
+
+  return response;
+}
+
+
+export const config = {
+  matcher: '/',
+}
