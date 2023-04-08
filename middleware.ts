@@ -4,15 +4,24 @@ import { verify } from "jsonwebtoken";
 import * as jose from 'jose';
 
 
-export function middleware(request: NextRequest) {
-  console.log("midware triggered")
+export async function middleware(request: NextRequest) {
 
-  const allCookies = request.cookies.getAll()
-  console.log(allCookies)
-
+  const user_token = request.cookies.get('token')
+  const jwt = user_token?.value;
+  const secret = new TextEncoder().encode(
+    'skjvwrwr834745',
+  )
+  try {
+    await jose.jwtVerify((jwt as string), secret);
+    console.log("jwt valid")
+  } catch (error) {
+    console.log(error)
+  }
 
   const response = NextResponse.next()
-
   return response
 }
 
+export const config = {
+  matcher: '/test/:path*',
+}

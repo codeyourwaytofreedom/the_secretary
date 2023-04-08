@@ -22,7 +22,7 @@ export default async function handler(
   const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745");
   
   //res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/test`);
-  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; SameSite=None; Secure`);
+  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
 
   res.status(200).json({ message: 'Cookie set successfully' });
 
