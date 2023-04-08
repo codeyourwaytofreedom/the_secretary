@@ -19,9 +19,21 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745");
+  //DATABASE CONNECTION
+  const client = await connectToDatabase();
+  const members = await client.db("clinics").listCollections().toArray();
+
+  if(members.length !== 0){
+    console.log("this is a member")
+  }
+  else{
+    console.log("access denied: not a member")
+  }
+
+  client.close();
+
+  const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
   
-  //res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/test`);
   res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
 
   res.status(200).json({ message: 'Cookie set successfully' });
