@@ -5,29 +5,32 @@ import { verify } from "jsonwebtoken";
 import * as jose from 'jose';
 
 
-export async function middleware(request: NextRequest,response:NextResponse) {
-   response = NextResponse.next();
+export async function middleware(request: NextRequest, response: NextResponse) {
+  console.log("middleware triggered")
   const allCookies = request.cookies.getAll();
   const tokenCookie = allCookies.find(cookie => cookie.name === 'token');
-  if (tokenCookie) {
-/*     const jwt = tokenCookie.value;
-    console.log(jwt) */
-    const secret = new TextEncoder().encode(
-      'cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2',
-    )
-    const jwt =
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1cm46ZXhhbXBsZTpjbGFpbSI6dHJ1ZSwiaWF0IjoxNjY5MDU2MjMxLCJpc3MiOiJ1cm46ZXhhbXBsZTppc3N1ZXIiLCJhdWQiOiJ1cm46ZXhhbXBsZTphdWRpZW5jZSJ9.C4iSlLfAUMBq--wnC6VqD9gEOhwpRZpoRarE0m7KEnI'
-    
-    const { payload, protectedHeader } = await jose.jwtVerify(jwt, secret)
-    
-    console.log(protectedHeader)
-    console.log(payload)
-    console.log("found")
-    response.headers.set('Authorization', `Bearer ${tokenCookie}`);
+  if (request.url.startsWith("/test")) {
+    if (tokenCookie) {
+      const jwt = tokenCookie.value;
+      const secret = new TextEncoder().encode('skjvwrwr834745');
+      try {
+        await jose.jwtVerify(jwt, secret);
+        response.headers.set('Authorization', `Bearer ${tokenCookie}`);
+        return response;
+      } catch (error) {
+        console.log(error);
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    } else {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  } else {
+    return NextResponse.next();
   }
-  else{
-    console.log("not found")
-  }
-  return response;
 }
 
+
+
+export const config = {
+  matcher: '/test/:path*',
+}

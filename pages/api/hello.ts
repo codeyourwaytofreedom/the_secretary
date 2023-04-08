@@ -20,11 +20,10 @@ export default async function handler(
 ) {
 
   const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745", {
-    expiresIn: '1h',
+    expiresIn: '5s',
   });
   
   res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; SameSite=Strict`);
-  // Send the response
   res.status(200).json({ message: 'Cookie set successfully' });
 
 }
