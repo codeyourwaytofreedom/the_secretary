@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from './mongodb';
+import jwt from 'jsonwebtoken';
 
 type Data = {
   name: object[]
@@ -35,6 +36,12 @@ export default async function handler(
   
   res.status(200).json( documents );
   client.close(); */
+
+  const token = jwt.sign({ userId: "7fgh" }, "skjvwrwr834745", {
+    expiresIn: '1h',
+  });
+  console.log(token)
   console.log(req.body)
+  res.setHeader('Set-Cookie', `token=${token}; HttpOnly`);
   res.status(200).json( {res:"hiiiii"} );
 }

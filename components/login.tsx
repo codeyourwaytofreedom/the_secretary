@@ -1,9 +1,13 @@
 import l from "../styles/Login.module.css";
+import { useRouter } from 'next/router';
+
 type clinic = {
     name:string,
     email:string
 }
 const Login = () => {
+    const router = useRouter();
+
     const handle_login = async () => {
         const res = await fetch("http://localhost:3000/api/hello",{
             method: "POST",
@@ -15,6 +19,10 @@ const Login = () => {
         });
         const data = await res.json();
         console.log(data)
+        console.log(res.status)
+        if(res.status === 200){
+            router.push("/test")
+        }
     }
     
     return ( 
@@ -24,7 +32,6 @@ const Login = () => {
                 <button onClick={handle_login}>Login</button>
             </div>
         </div>
-        
      );
 }
  
