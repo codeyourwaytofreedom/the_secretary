@@ -37,7 +37,10 @@ const Login = () => {
                     <div className={l.login_shell_line}>
                         <input type="text" />
                     </div>
-                    <button type="submit" onClick={(e)=>handle_login(e)}>Login</button>
+                    <div className={l.login_shell_line}>
+                        <button type="submit" onClick={(e)=>handle_login(e)}>Login</button>
+                    </div>
+                    
                 </form>
 
             </div>
