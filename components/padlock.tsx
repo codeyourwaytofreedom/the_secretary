@@ -3,7 +3,6 @@ import l from "../styles/Login.module.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useEffect, useState } from "react";
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
-import { useLoader } from '@react-three/fiber';
 import { Color,Shape } from "three";
 
 const CameraController = () => {
@@ -49,7 +48,7 @@ const Padlock = () => {
         <group rotation={[Math.PI,0,0]} position={[-3.4,3.5,0]}>
             { 
               lock.map((l_part,index)=>
-              <group scale={0.013} position={[0,0,0]}>
+              <group scale={0.013} position={[0,0,0]} key={index}>
                   <mesh>
                     <extrudeGeometry args={[l_part.shape,extrudeSettings]} />
                     <meshBasicMaterial color={l_part.color}/>
