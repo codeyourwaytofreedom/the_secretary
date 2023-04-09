@@ -1,5 +1,6 @@
 import l from "../styles/Login.module.css";
 import { useRouter } from 'next/router';
+import { MouseEvent } from 'react';
 
 type clinic = {
     name:string,
@@ -8,8 +9,9 @@ type clinic = {
 const Login = () => {
     const router = useRouter();
 
-    const handle_login = async () => {
-        const res = await fetch("https://the-secretary-codeyourwaytofreedom.vercel.app//api/hello",{
+    const handle_login = async (e:MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const res = await fetch("http://localhost:3000/api/hello",{
             method: "POST",
             body:JSON.stringify(
                 {
@@ -27,12 +29,24 @@ const Login = () => {
     
     return ( 
         <div className={l.login}>
-            <div>
-                <h1>Login page...</h1>
-                <button onClick={handle_login}>Login</button>
+            <div className={l.login_shell}>
+                <form>
+                    <div className={l.login_shell_line}>
+                        <input type="text" />
+                    </div>
+                    <div className={l.login_shell_line}>
+                        <input type="text" />
+                    </div>
+                    <button type="submit" onClick={(e)=>handle_login(e)}>Login</button>
+                </form>
+
             </div>
         </div>
      );
 }
  
 export default Login;
+
+
+
+//"https://the-secretary-codeyourwaytofreedom.vercel.app//api/hello"

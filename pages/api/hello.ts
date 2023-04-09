@@ -19,7 +19,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  //DATABASE CONNECTION
+  //DATABASE CONNECTION buraya try catch ekle
   const client = await connectToDatabase();
   const members = await client.db("clinics").listCollections().toArray();
 
