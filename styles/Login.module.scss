@@ -9,11 +9,12 @@
         width: 300px;
         width: 90vw;
         max-width: 400px;
-        height: 400px;
+        height: 450px;
         box-shadow: 0px 0px 5px 2px #fecd51;
         border-radius: 10px;
+        padding: 10px 20px;
         &_line{
-            padding: 10px 20px;
+            padding: 10px 0;
             input{
                 width: 100%;
                 line-height: 1.5;
@@ -25,17 +26,24 @@
                 background: #fecd51; 
                 color: #2f1b41;
                 border: none;
+                height: 45px;
                 &:focus{
                     box-shadow: 0px 0px 3px 1px #fecd51;
                     outline: none;
                 }
             }
         }
+        &_padlock{
+            padding: 10px 20px;
+            background-color: silver;
+            height: 50%;
+        }
         button{
             width: 100%;
             height: 50px;
             background: transparent;
-            color:yellow;
+            color:#fecd51;
+            border-radius: 5px;
             border: none;
             box-shadow: 0px 0px 3px 2px #fecd51;
             font-family: 'Lora', serif !important;

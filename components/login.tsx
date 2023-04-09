@@ -1,6 +1,7 @@
 import l from "../styles/Login.module.css";
 import { useRouter } from 'next/router';
 import { MouseEvent } from 'react';
+import Padlock from "./padlock";
 
 type clinic = {
     name:string,
@@ -40,9 +41,8 @@ const Login = () => {
                     <div className={l.login_shell_line}>
                         <button type="submit" onClick={(e)=>handle_login(e)}>Login</button>
                     </div>
-                    
                 </form>
-
+                <Padlock/>
             </div>
         </div>
      );
