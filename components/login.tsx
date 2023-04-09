@@ -9,7 +9,7 @@ const Login = () => {
     const router = useRouter();
 
     const handle_login = async () => {
-        const res = await fetch("https://the-secretary-codeyourwaytofreedom.vercel.app/api/hello",{
+        const res = await fetch("https://the-secretary-codeyourwaytofreedom.vercel.app//api/hello",{
             method: "POST",
             body:JSON.stringify(
                 {
