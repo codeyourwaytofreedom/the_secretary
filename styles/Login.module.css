@@ -10,7 +10,7 @@
   width: 90vw;
   max-width: 400px;
   height: 450px;
-  box-shadow: 0px 0px 5px 2px #fecd51;
+  box-shadow: 0px 0px 10px 1px #fecd51;
   border-radius: 10px;
   padding: 10px 20px;
 }
@@ -38,6 +38,11 @@
   padding: 10px 20px;
   height: 50%;
 }
+.login_shell #animated_line {
+  -webkit-animation: blink 0.8s infinite;
+          animation: blink 0.8s infinite;
+  background-color: #AB0041;
+}
 .login_shell button {
   width: 100%;
   height: 50px;
@@ -47,5 +52,29 @@
   border: none;
   box-shadow: 0px 0px 3px 2px #fecd51;
   font-family: "Lora", serif !important;
-  font-size: larger;
+  font-size: large;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    font-size: large;
+  }
+  50% {
+    font-size: larger;
+  }
+  100% {
+    font-size: large;
+  }
+}
+
+@keyframes blink {
+  0% {
+    font-size: large;
+  }
+  50% {
+    font-size: larger;
+  }
+  100% {
+    font-size: large;
+  }
 }/*# sourceMappingURL=Login.module.css.map */

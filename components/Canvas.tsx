@@ -3,6 +3,7 @@ import l from "../styles/Login.module.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useEffect, useRef, useState } from "react";
 import Plock from "./plock";
+import { NextPage } from "next";
 
 const CameraController = () => {
     const { camera, gl } = useThree();
@@ -19,13 +20,15 @@ const CameraController = () => {
     );
     return null;
 };
-
-const Animation_3D = () => {
+interface approval {
+  let_in:boolean,
+  setLet_in:React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Animation_3D:NextPage<approval> = ({let_in,setLet_in}) => {
   return (
   <div className={l.login_shell_padlock}>
       <Canvas>
-      <CameraController/>
-      <Plock/>
+      <Plock let_in={let_in} setLet_in={setLet_in}/>
       </Canvas>
   </div>
     );
