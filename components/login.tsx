@@ -1,7 +1,7 @@
 import l from "../styles/Login.module.css";
 import { useRouter } from 'next/router';
 import { MouseEvent } from 'react';
-import Padlock from "./padlock";
+import Padlock from "./Canvas";
 
 type clinic = {
     name:string,
