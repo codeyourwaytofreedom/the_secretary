@@ -3,11 +3,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from './mongodb';
 import jwt from 'jsonwebtoken';
 
-type Patient = {
-  name:string,
-  surname:string,
-  age:number,
-  gender:boolean
+interface Clinic {
+  name: string;
+  password: string;
 }
 
 interface ResponseWithCookies extends NextApiResponse {
@@ -19,12 +17,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   //DATABASE CONNECTION buraya try catch ekle
-  console.log(req.body)
+
+  const user_input:Clinic = JSON.parse(req.body);
+
   try{
     const client = await connectToDatabase();
     const members = await client.db("clinics").listCollections().toArray();
-  
-    if(members.length !== 0){
+    let is_in = false;
+    members.map(m=> m.name === user_input.name ? is_in = true : null )
+    if(is_in){
       console.log("this is a member");
       const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
       res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
@@ -32,7 +33,7 @@ export default async function handler(
     }
     else{
       console.log("access denied: not a member");
-      res.status(401).json({ message: 'Member not found!' });
+      res.status(401).json({ message: 'Member not found!'});
     }
     client.close();
   }
