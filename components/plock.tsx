@@ -1,11 +1,8 @@
 
-import { Mesh } from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import l from "../styles/Login.module.css";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
-import { Color,Group,Shape, Vector3 } from "three";
+import { Color,Shape, Vector3 } from "three";
 
 
 type svg_shape = {
@@ -14,7 +11,7 @@ type svg_shape = {
 }
 const extrudeSettings = { depth: 28, bevelEnabled: true, bevelSegments: 9, steps: 2, bevelSize: 1, bevelThickness: 1 };
 
-const Test = () => {
+const Plock = () => {
     useFrame(()=>{
         
     })
@@ -53,4 +50,4 @@ const Test = () => {
      );
 }
  
-export default Test;
+export default Plock;

@@ -1,7 +1,7 @@
 import l from "../styles/Login.module.css";
 import { useRouter } from 'next/router';
 import { MouseEvent } from 'react';
-import Padlock from "./Canvas";
+import Animation_3D from "./Canvas";
 
 type clinic = {
     name:string,
@@ -42,7 +42,7 @@ const Login = () => {
                         <button type="submit" onClick={(e)=>handle_login(e)}>Login</button>
                     </div>
                 </form>
-                <Padlock/>
+                <Animation_3D/>
             </div>
         </div>
      );
