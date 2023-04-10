@@ -1,16 +1,18 @@
 import l from "../styles/Login.module.css";
 import { useRouter } from 'next/router';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useRef, useState } from 'react';
 import Animation_3D from "./Canvas";
 
 type clinic = {
     name:string,
-    email:string
+    password:string
 }
 const Login = () => {
     const router = useRouter();
     const [let_in, setLet_in] = useState<boolean>(false);
     const [clicked, setClicked] = useState<number>(0);
+    const user_name = useRef<HTMLInputElement>(null);
+    const password = useRef<HTMLInputElement>(null);
 
 
     const handle_login = async (e:MouseEvent<HTMLButtonElement>) => {
@@ -20,8 +22,8 @@ const Login = () => {
             method: "POST",
             body:JSON.stringify(
                 {
-                    name:"clinic_06",
-                    email:"can.kolej@gmail.com"
+                    name:user_name.current?.value,
+                    password: password.current?.value
                 } as clinic)
         });
         const data = await res.json();
@@ -34,7 +36,13 @@ const Login = () => {
             }, 1000);
             setTimeout(() => {
                 router.push("/test")
-            }, 2000);
+            }, 2300);
+        }
+        else{
+            console.log(res.status)
+            setTimeout(() => {
+                setClicked(0);
+            }, 1000);
         }
     }
     
@@ -43,10 +51,10 @@ const Login = () => {
             <div className={l.login_shell}>
                 <form>
                     <div className={l.login_shell_line}>
-                        <input type="text" />
+                        <input type="text" name="username" ref={user_name}/>
                     </div>
                     <div className={l.login_shell_line}>
-                        <input type="text" />
+                        <input type="password" name="password" ref={password}/>
                     </div>
                     <div className={l.login_shell_line}>
                         <button type="submit" onClick={(e)=>handle_login(e)} id={clicked === 1 ? l.animated_line : l.i}>

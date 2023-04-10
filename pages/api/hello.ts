@@ -18,26 +18,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   //DATABASE CONNECTION buraya try catch ekle
-  const client = await connectToDatabase();
-  const members = await client.db("clinics").listCollections().toArray();
-
-  if(members.length !== 0){
-    console.log("this is a member")
-  }
-  else{
-    console.log("access denied: not a member")
-  }
-
-  client.close();
-
-  const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
+  console.log(req.body)
+  try{
+    const client = await connectToDatabase();
+    const members = await client.db("clinics").listCollections().toArray();
   
-  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
-
-  res.status(200).json({ message: 'Cookie set successfully' });
-
+    if(members.length !== 0){
+      console.log("this is a member");
+      const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
+      res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
+      res.status(200).json({ message: 'Cookie set successfully' });
+    }
+    else{
+      console.log("access denied: not a member");
+      res.status(401).json({ message: 'Member not found!' });
+    }
+    client.close();
+  }
+  catch(err){
+    res.status(503).json({ message: err });
+  }
 }
 
 
