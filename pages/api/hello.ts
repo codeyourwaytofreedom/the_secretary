@@ -22,9 +22,11 @@ export default async function handler(
 
   try{
     const client = await connectToDatabase();
-    const members = await client.db("clinics").listCollections().toArray();
+    const members = await client.db("members").collection("clinics");
+    const documents = await members.find().toArray();
     let is_in = false;
-    members.map(m=> m.name === user_input.name ? is_in = true : null )
+    documents.map(m=> m.name === user_input.name ? is_in = true : null)
+    documents.map(m=> console.log(m.password))
     if(is_in){
       console.log("this is a member");
       const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
