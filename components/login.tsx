@@ -21,7 +21,7 @@ const Login = () => {
         setClicked(1);
         e.preventDefault();
         if(regex_username.test(user_name.current!.value) && regex_password.test(password.current!.value)){
-            const res = await fetch("https://the-secretary-codeyourwaytofreedom.vercel.app//api/hello",{
+            const res = await fetch("http://localhost:3000/api/hello",{
                 method: "POST",
                 body:JSON.stringify(
                     {
@@ -37,7 +37,7 @@ const Login = () => {
                     setLet_in(l => !l);
                 }, 1000);
                 setTimeout(() => {
-                    router.push("/test")
+                    router.push(data.url)
                 }, 2300);
             }
             else{

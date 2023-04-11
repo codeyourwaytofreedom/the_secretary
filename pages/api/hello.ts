@@ -23,7 +23,7 @@ export default async function handler(
   const user_input:Clinic = JSON.parse(req.body);
   console.log(user_input)
   const ip = requestIp.getClientIp(req);
-  console.log(ip); // Your public IP address
+
   try{
     const client = await connectToDatabase();
     const members = client.db("members").collection("clinics");
@@ -36,7 +36,7 @@ export default async function handler(
       console.log("this is a member");
       const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
       res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
-      res.status(200).json({ message: 'Cookie set successfully' });
+      res.status(200).json({ message: 'Cookie set successfully', url:"/test" });
     }
     else{
       console.log("Access denied! Invalid Credentials");
