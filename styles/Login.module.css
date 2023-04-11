@@ -34,6 +34,14 @@
   box-shadow: 0px 0px 3px 1px rgb(254, 205, 81);
   outline: none;
 }
+.login_shell_warning {
+  color: #c50851;
+  font-size: larger;
+  text-decoration: underline;
+  -webkit-text-decoration-color: #fecd51;
+          text-decoration-color: #fecd51;
+  text-underline-offset: 4px;
+}
 .login_shell_padlock {
   padding: 10px 20px;
   height: 50%;

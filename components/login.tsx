@@ -11,6 +11,7 @@ const Login = () => {
     const router = useRouter();
     const [let_in, setLet_in] = useState<boolean>(false);
     const [clicked, setClicked] = useState<number>(0);
+    const [warning, setWarning] = useState<string>("")
     const user_name = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
 
@@ -28,7 +29,6 @@ const Login = () => {
         });
         const data = await res.json();
         console.log(data)
-        console.log(res.status)
         if(res.status === 200){
             setClicked(2)
             setTimeout(() => {
@@ -40,9 +40,10 @@ const Login = () => {
         }
         else{
             console.log(res.status)
+            setWarning(data.message)
             setTimeout(() => {
                 setClicked(0);
-            }, 1000);
+            }, 300);
         }
     }
     
@@ -61,6 +62,7 @@ const Login = () => {
                             {clicked === 0 ? "Login" : clicked === 1 ?  "Logging in..." : "Successful!"}
                         </button>
                     </div>
+                    <div className={l.login_shell_warning}>{warning}</div>
                 </form>
                 <Animation_3D let_in={let_in} setLet_in={setLet_in}/>
             </div>

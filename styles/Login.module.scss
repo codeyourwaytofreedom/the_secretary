@@ -33,6 +33,13 @@
                 }
             }
         }
+        &_warning{
+            color: #c50851;
+            font-size: larger;
+            text-decoration: underline;
+            text-decoration-color: #fecd51;
+            text-underline-offset: 4px;
+        }
         &_padlock{
             padding: 10px 20px;
             height: 50%;

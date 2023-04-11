@@ -22,7 +22,7 @@ export default async function handler(
   console.log(user_input)
   try{
     const client = await connectToDatabase();
-    const members = await client.db("members").collection("clinics");
+    const members = client.db("members").collection("clinics");
     const foundDocument = await members.findOne({ name: user_input.name, password: user_input.password });
     const is_in = foundDocument !== null;
 
@@ -33,13 +33,13 @@ export default async function handler(
       res.status(200).json({ message: 'Cookie set successfully' });
     }
     else{
-      console.log("access denied: not a member");
-      res.status(401).json({ message: 'Member not found!'});
+      console.log("Access denied! Invalid Credentials");
+      res.status(401).json({ message: "Access denied! Invalid Credentials"});
     }
     client.close();
   }
   catch(err){
-    res.status(503).json({ message: err });
+    res.status(503).json({ message: "Unable to connect! Please check your internet connection and try again later.", error:err });
   }
 }
 
