@@ -23,9 +23,8 @@ export default async function handler(
   try{
     const client = await connectToDatabase();
     const members = await client.db("members").collection("clinics");
-    const documents = await members.find().toArray();
-    let is_in = false;
-    documents.map(m=> m.name === user_input.name && m.password === user_input.password ? is_in = true : null);
+    const foundDocument = await members.findOne({ name: user_input.name, password: user_input.password });
+    const is_in = foundDocument !== null;
 
     if(is_in){
       console.log("this is a member");
