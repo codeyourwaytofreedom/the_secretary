@@ -19,14 +19,14 @@ export default async function handler(
   //DATABASE CONNECTION buraya try catch ekle
 
   const user_input:Clinic = JSON.parse(req.body);
-
+  console.log(user_input)
   try{
     const client = await connectToDatabase();
     const members = await client.db("members").collection("clinics");
     const documents = await members.find().toArray();
     let is_in = false;
-    documents.map(m=> m.name === user_input.name ? is_in = true : null)
-    documents.map(m=> console.log(m.password))
+    documents.map(m=> m.name === user_input.name && m.password === user_input.password ? is_in = true : null);
+
     if(is_in){
       console.log("this is a member");
       const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
