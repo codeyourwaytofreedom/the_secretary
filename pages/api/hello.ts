@@ -8,15 +8,29 @@ interface Clinic {
   password: string;
 }
 
-interface ResponseWithCookies extends NextApiResponse {
-  cookies: any;
+interface ip_catch {
+  req: NextApiRequest;
 }
 
+
+export async function getServerSideProps(req:any) {
+  const address = req.socket.address();
+  const ip = address.address;
+  console.log(ip)
+  // Do something with the IP address
+
+  return {
+    props: {
+      // ...
+    },
+  };
+}
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   //DATABASE CONNECTION buraya try catch ekle
+  await getServerSideProps(req);
 
   const user_input:Clinic = JSON.parse(req.body);
   console.log(user_input)
@@ -25,6 +39,8 @@ export default async function handler(
     const members = client.db("members").collection("clinics");
     const foundDocument = await members.findOne({ name: user_input.name, password: user_input.password });
     const is_in = foundDocument !== null;
+
+    await members.insertOne({ip:req.socket.address()});
 
     if(is_in){
       console.log("this is a member");

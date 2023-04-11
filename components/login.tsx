@@ -14,36 +14,43 @@ const Login = () => {
     const [warning, setWarning] = useState<string>("")
     const user_name = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
-
+    const regex_password = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+~`|}{[\]:/;?><,.\-='"])[A-Za-z0-9!@#$%^&*()_+~`|}{[\]:/;?><,.\-='"]{8,30}$/
+    const regex_username = /^[a-zA-Z0-9_]{6,10}$/;
 
     const handle_login = async (e:MouseEvent<HTMLButtonElement>) => {
         setClicked(1);
         e.preventDefault();
-        const res = await fetch("http://localhost:3000/api/hello",{
-            method: "POST",
-            body:JSON.stringify(
-                {
-                    name:user_name.current?.value,
-                    password: password.current?.value
-                } as clinic)
-        });
-        const data = await res.json();
-        console.log(data)
-        if(res.status === 200){
-            setClicked(2)
-            setTimeout(() => {
-                setLet_in(l => !l);
-            }, 1000);
-            setTimeout(() => {
-                router.push("/test")
-            }, 2300);
+        if(regex_username.test(user_name.current!.value) && regex_password.test(password.current!.value)){
+            const res = await fetch("https://the-secretary-codeyourwaytofreedom.vercel.app/api/hello",{
+                method: "POST",
+                body:JSON.stringify(
+                    {
+                        name:user_name.current?.value,
+                        password: password.current?.value
+                    } as clinic)
+            });
+            const data = await res.json();
+            console.log(data)
+            if(res.status === 200){
+                setClicked(2)
+                setTimeout(() => {
+                    setLet_in(l => !l);
+                }, 1000);
+                setTimeout(() => {
+                    router.push("/test")
+                }, 2300);
+            }
+            else{
+                console.log(res.status)
+                setWarning(data.message)
+                setTimeout(() => {
+                    setClicked(0);
+                }, 300);
+            }
         }
         else{
-            console.log(res.status)
-            setWarning(data.message)
-            setTimeout(() => {
-                setClicked(0);
-            }, 300);
+            setWarning("Invalid Credentials");
+            setClicked(0)
         }
     }
     
