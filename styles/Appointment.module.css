@@ -1,29 +1,47 @@
 .console {
   height: 100vh;
-  width: 400px;
+  width: 350px;
   display: grid;
 }
 .console_current {
   padding: 20px;
+  position: relative;
 }
 .console_current :nth-child(1) {
-  height: 90px;
+  height: 70px;
   background-color: crimson;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
   justify-content: space-around;
 }
-.console_current :nth-child(1) span {
+.console_current :nth-child(1) #holder {
   display: block;
-  width: 12px;
+  width: 13px;
   height: 30px;
   background-color: black;
   border-radius: 5px;
   position: relative;
   top: -10px;
+  z-index: 20 !important;
 }
 .console_current :nth-child(2) {
   height: 160px;
   background-color: rgb(222, 219, 219);
+}
+.console_current :nth-child(3) {
+  height: 40px;
+  position: relative;
+  top: -230px;
+  display: flex;
+  justify-content: space-around;
+}
+.console_current :nth-child(3) #oval {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  top: 7px;
+  border-radius: 50%;
 }/*# sourceMappingURL=Appointment.module.css.map */

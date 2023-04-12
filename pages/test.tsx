@@ -11,11 +11,26 @@ const Test = () => {
             <div>
                 {
                     [...Array(10)].map((e,i) =>
-                    <span key={i}></span>
+                    <>
+                    <span key={i} id={a.holder}>
+                    </span>
+                    </>
+
                 )
                 }
             </div>
-            <div></div>
+            <div>DATE</div>
+            <div>
+            {
+                    [...Array(10)].map((e,i) =>
+                    <>
+                    <span key={i} id={a.oval}>
+                    </span>
+                    </>
+
+                )
+                }
+            </div>
         </div>
         <div></div>
         <div></div>
