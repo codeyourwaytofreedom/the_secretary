@@ -21,7 +21,7 @@ const Login = () => {
         setClicked(1);
         e.preventDefault();
         if(regex_username.test(user_name.current!.value) && regex_password.test(password.current!.value)){
-            const res = await fetch("http://localhost:3000/api/hello",{
+            const res = await fetch("http://localhost:3000/api/login",{
                 method: "POST",
                 body:JSON.stringify(
                     {
