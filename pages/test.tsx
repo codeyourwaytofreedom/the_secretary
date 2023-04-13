@@ -1,7 +1,6 @@
 import a from "../styles/Appointment.module.css";
 import { useEffect, useState } from "react";
 import Cal from "../components/calendar";
-import 'react-calendar/dist/Calendar.css';
 
 const Test = () => {
     const today = new Date();
