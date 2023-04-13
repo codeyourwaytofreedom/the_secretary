@@ -1,38 +1,39 @@
 {
-  "name": "secretary",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@next/font": "13.2.4",
-    "@react-three/fiber": "^8.12.0",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.33",
-    "@types/react-dom": "18.0.11",
-    "cookie-parser": "^1.4.6",
-    "cookies": "^0.8.0",
-    "dotenv": "^16.0.3",
-    "eslint": "8.37.0",
-    "eslint-config-next": "13.2.4",
-    "jose": "^4.13.1",
-    "jsonwebtoken": "^9.0.0",
-    "jwt-decode": "^3.1.2",
-    "mongodb": "^5.2.0",
-    "next": "^13.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "request-ip": "^3.3.0",
-    "three": "^0.151.3",
-    "typescript": "5.0.3"
-  },
-  "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.1",
-    "@types/request-ip": "^0.0.37",
-    "@types/three": "^0.150.1"
-  }
+    "name": "secretary",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@next/font": "13.2.4",
+        "@react-three/fiber": "^8.12.0",
+        "@types/node": "18.15.11",
+        "@types/react": "18.0.33",
+        "@types/react-dom": "18.0.11",
+        "cookie-parser": "^1.4.6",
+        "cookies": "^0.8.0",
+        "dotenv": "^16.0.3",
+        "eslint": "8.37.0",
+        "eslint-config-next": "13.2.4",
+        "jose": "^4.13.1",
+        "jsonwebtoken": "^9.0.0",
+        "jwt-decode": "^3.1.2",
+        "mongodb": "^5.2.0",
+        "next": "^13.3.0",
+        "react": "^18.2.0",
+        "react-calendar": "^4.2.1",
+        "react-dom": "18.2.0",
+        "request-ip": "^3.3.0",
+        "three": "^0.151.3",
+        "typescript": "5.0.3"
+    },
+    "devDependencies": {
+        "@types/jsonwebtoken": "^9.0.1",
+        "@types/request-ip": "^0.0.37",
+        "@types/three": "^0.150.1"
+    }
 }

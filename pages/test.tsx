@@ -1,8 +1,8 @@
-import { spawn } from "child_process";
-import Image from "next/image";
-import calendar from "../public/calendar.png";
 import a from "../styles/Appointment.module.css";
 import { useEffect, useState } from "react";
+import Cal from "../components/calendar";
+import 'react-calendar/dist/Calendar.css';
+
 const Test = () => {
     const today = new Date();
     const formattedDate = today.toLocaleDateString("tr-TR", {
@@ -17,7 +17,7 @@ const Test = () => {
         hour12: false,
       }));
 
-    useEffect(() => {
+/*     useEffect(() => {
     const interval = setInterval(() => {
         const time = new Date().toLocaleTimeString("tr-TR", {
             hour: "2-digit",
@@ -31,7 +31,9 @@ const Test = () => {
         return () => {
         clearInterval(interval);
         };
-    }, []);
+    }, []); */
+
+
     return ( 
     <>
     <div className={a.console}>
@@ -49,8 +51,8 @@ const Test = () => {
             </div>
             <div className={a.console_current_center}>
                     <div>
-                        <div>{formattedDate}</div>
-                        <div>{currentTime}</div>
+                        <div>{formattedDate!}</div>
+                        <div suppressHydrationWarning>{currentTime!}</div>
                     </div>
             </div>
             <div className={a.console_current_holes}>
@@ -65,7 +67,9 @@ const Test = () => {
                 }
             </div>
         </div>
-        <div></div>
+        <div className={a.console_calendar}>
+                <Cal/>
+        </div>
         <div></div>
     </div>
         
