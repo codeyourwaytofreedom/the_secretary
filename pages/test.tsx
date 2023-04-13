@@ -66,7 +66,7 @@ const Test = () => {
                 }
             </div>
         </div>
-        <div className={a.console_calendar}>
+        <div>
                 <Cal/>
         </div>
         <div></div>
