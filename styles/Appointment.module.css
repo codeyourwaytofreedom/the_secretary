@@ -7,36 +7,48 @@
   padding: 20px;
   position: relative;
 }
-.console_current :nth-child(1) {
+.console_current_top {
   height: 70px;
-  background-color: crimson;
+  background-color: #2f1b41;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
   justify-content: space-around;
 }
-.console_current :nth-child(1) #holder {
+.console_current_top #holder {
   display: block;
   width: 13px;
   height: 30px;
-  background-color: black;
+  background-color: silver;
   border-radius: 5px;
   position: relative;
   top: -10px;
   z-index: 20 !important;
 }
-.console_current :nth-child(2) {
+.console_current_center {
   height: 160px;
   background-color: rgb(222, 219, 219);
+  font-family: "Lora", serif !important;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  color: #2f1b41;
+  text-align: center;
 }
-.console_current :nth-child(3) {
+.console_current_center :nth-child(2) {
+  color: #c50851;
+  font-size: 30px;
+  padding-top: 10px;
+}
+.console_current_holes {
   height: 40px;
   position: relative;
   top: -230px;
   display: flex;
   justify-content: space-around;
 }
-.console_current :nth-child(3) #oval {
+.console_current_holes #oval {
   display: block;
   position: relative;
   width: 20px;

@@ -2,13 +2,41 @@ import { spawn } from "child_process";
 import Image from "next/image";
 import calendar from "../public/calendar.png";
 import a from "../styles/Appointment.module.css";
-
+import { useEffect, useState } from "react";
 const Test = () => {
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("tr-TR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+    const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString("tr-TR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second:"2-digit",
+        hour12: false,
+      }));
+
+    useEffect(() => {
+    const interval = setInterval(() => {
+        const time = new Date().toLocaleTimeString("tr-TR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second:"2-digit",
+            hour12: false,
+          })
+      setCurrentTime(time);
+    }, 1000);
+
+        return () => {
+        clearInterval(interval);
+        };
+    }, []);
     return ( 
     <>
     <div className={a.console}>
         <div className={a.console_current}>
-            <div>
+            <div className={a.console_current_top}>
                 {
                     [...Array(10)].map((e,i) =>
                     <>
@@ -19,8 +47,13 @@ const Test = () => {
                 )
                 }
             </div>
-            <div>DATE</div>
-            <div>
+            <div className={a.console_current_center}>
+                    <div>
+                        <div>{formattedDate}</div>
+                        <div>{currentTime}</div>
+                    </div>
+            </div>
+            <div className={a.console_current_holes}>
             {
                     [...Array(10)].map((e,i) =>
                     <>
