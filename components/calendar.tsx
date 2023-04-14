@@ -1,5 +1,4 @@
 import Calendar from 'react-calendar';
-import "../styles/Calendar.module.css";
 
 const Cal = () => {
     return ( 
