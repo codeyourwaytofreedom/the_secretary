@@ -3,8 +3,8 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 
 interface date {
-    selected_date:Date | undefined;
-    setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+    selected_date:Date;
+    setDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 const Cal:NextPage<date> = ({selected_date, setDate}) => {

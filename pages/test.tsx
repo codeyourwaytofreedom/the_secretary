@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import Cal from "../components/calendar";
 
 const Test = () => {
-    const [selected_date, setDate] = useState<Date>();
+    
     const today = new Date();
     const formattedDate = today.toLocaleDateString("tr-TR", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric"
       });
+    const [selected_date, setDate] = useState<Date>(today);
     const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString("tr-TR", {
         hour: "2-digit",
         minute: "2-digit",
@@ -32,7 +33,6 @@ const Test = () => {
         clearInterval(interval);
         };
     }, []);
-
 
     return ( 
     <>
@@ -76,15 +76,23 @@ const Test = () => {
             </div>
         </div>
         <div className={a.detail}>
-        <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      })}</h1>
+        <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
+        {
+            today.toDateString() === selected_date.toDateString() && 
+            <div className={a.detail_appointment}>
+                Current Appointment details go here...
+            </div>
+        }
+
+        <div className={a.detail_schedule}>
+            {
+                [...Array(16)].map((e,i)=>
+                <div className={a.detail_schedule_each} key={i}>{i}</div>
+                )
+            }
+        </div>
         </div>
     </div>
-
-        
     </>
         
      );

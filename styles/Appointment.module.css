@@ -80,4 +80,21 @@
   width: 100%;
   padding: 20px;
   padding-top: 50px;
+}
+.detail h1 {
+  background-color: #2f1b41;
+  color: yellow;
+}
+.detail_appointment {
+  border: 2px solid blue;
+  height: 150px;
+}
+.detail_schedule {
+  border: 2px solid purple;
+  height: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.detail_schedule_each {
+  border: 1px solid salmon;
 }/*# sourceMappingURL=Appointment.module.css.map */
