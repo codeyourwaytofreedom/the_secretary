@@ -83,6 +83,8 @@
     h1{
         background-color: #2f1b41;
         color: yellow;
+        display: grid;
+        justify-content: center;
     }
     &_appointment{
         border:2px solid blue;
