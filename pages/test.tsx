@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Cal from "../components/calendar";
 
 const Test = () => {
-    const [date, setDate] = useState<Date>();
+    const [selected_date, setDate] = useState<Date>();
     const today = new Date();
     const formattedDate = today.toLocaleDateString("tr-TR", {
         day: "2-digit",
@@ -69,14 +69,14 @@ const Test = () => {
                 </div>
             </div>
             <div className={a.console_calendar}>
-                <Cal date={date} setDate={setDate}/>
+                <Cal selected_date={selected_date} setDate={setDate}/>
             </div>
             <div>
                 <button className={a.console_edit}>LOG OUT</button>
             </div>
         </div>
         <div className={a.detail}>
-        <h1>{date && date!.toLocaleDateString("tr-TR", {
+        <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric"

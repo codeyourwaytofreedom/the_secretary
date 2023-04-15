@@ -3,18 +3,19 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 
 interface date {
-    date:Date | undefined;
+    selected_date:Date | undefined;
     setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }
 
-const Cal:NextPage<date> = ({date, setDate}) => {
+const Cal:NextPage<date> = ({selected_date, setDate}) => {
     return ( 
         <>
         
             <Calendar locale={"en-US"} 
                 maxDate={new Date(2024, 0, 1)} 
                 minDate={new Date(2023, 0, 1)}
-                onClickDay={(date) => {console.log(setDate(date)); console.log(typeof(date.toLocaleDateString("tr-TR")))}}
+                onClickDay={(date) => {setDate(date); console.log(date.toLocaleString('en-US',{ weekday: 'long' }))}}
+                tileDisabled={({date}) => date.toLocaleString('en-US',{ weekday: 'long' }) === "Sunday" } 
             />     
         </>    
      );
