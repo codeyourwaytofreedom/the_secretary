@@ -85,6 +85,26 @@
     }
     &_appointment{
         height: 200px;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        #shell{
+            border: 2px solid blue;
+            padding: 10px;
+            display: flex;
+            #clock{
+                border: 2px solid green;
+                text-align: center;
+                img{
+                    object-fit: contain;
+                    width: 90px;
+                    height: 90px;
+                }
+            }
+            #info{
+                border: 2px solid pink;
+            }
+        }
     }
     &_schedule{
         height: 400px;
@@ -93,6 +113,7 @@
         gap: 5px;
         &_each{
             border:1px solid #2f1b41;
+            height: 45px;
         }
     }
 }

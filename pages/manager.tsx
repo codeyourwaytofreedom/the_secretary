@@ -2,8 +2,10 @@ import a from "../styles/Appointment.module.css";
 import { useEffect, useState } from "react";
 import Cal from "../components/calendar";
 import Current from "../components/current";
+import Image from "next/image";
+import clock from "../public/clock.png";
 
-const Test = () => {
+const Manager = () => {
     // Set the start time and end time
     const startTime = new Date();
     startTime.setHours(9, 0, 0, 0);
@@ -60,7 +62,16 @@ const Test = () => {
         {
             new Date().toDateString() === selected_date.toDateString() && 
             <div className={a.detail_appointment}>
-                Current Appointment details go here...
+                <div id={a.shell}>
+                    <div id={a.clock}>
+                        <Image src={clock} alt={"clock"}/>
+                        <p>{selected_slot}</p>
+                    </div>
+                    <div id={a.info}>
+                        Hello Deniz
+                    </div>
+                    
+                </div>
             </div>
         }
 
@@ -69,7 +80,9 @@ const Test = () => {
                 [...Array(16)].map((e,i)=>
                 <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
                     style={{backgroundColor: new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
-                    &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z")
+                    &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z") 
+                    && 
+                    selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}) === new Date().toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})
                     ? "red" : "rgb(222, 219, 219)",
                     border: time_slots[i] === selected_slot ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
@@ -86,4 +99,4 @@ const Test = () => {
      );
 }
  
-export default Test;
+export default Manager;
