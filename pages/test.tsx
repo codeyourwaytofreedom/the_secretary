@@ -4,51 +4,50 @@ import Cal from "../components/calendar";
 
 const Test = () => {
     // Set the start time and end time
-var startTime = new Date();
+const startTime = new Date();
 startTime.setHours(9, 0, 0, 0);
 
-var endTime = new Date();
+const endTime = new Date();
 endTime.setHours(18, 0, 0, 0);
+
+const time_slots:string[] = [];
 
 for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
     console.log(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
+    time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
 }
   
-
-
-
-
-
-
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString("tr-TR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      });
-    const [selected_date, setDate] = useState<Date>(today);
-    const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString("tr-TR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second:"2-digit",
-        hour12: false,
-      }));
+const today = new Date();
+const formattedDate = today.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+    });
+const [selected_date, setDate] = useState<Date>(today);
+const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    }));
 
     useEffect(() => {
     const interval = setInterval(() => {
         const time = new Date().toLocaleTimeString("tr-TR", {
             hour: "2-digit",
             minute: "2-digit",
-            second:"2-digit",
             hour12: false,
           })
       setCurrentTime(time);
-    }, 1000);
+    }, 60000);
 
         return () => {
         clearInterval(interval);
         };
     }, []);
+
+    const handle_appointment = (e:any) => {
+        console.log(e.currentTarget.value)
+    }
 
     return ( 
     <>
@@ -103,7 +102,9 @@ for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 3
         <div className={a.detail_schedule}>
             {
                 [...Array(16)].map((e,i)=>
-                <div className={a.detail_schedule_each} key={i}>{i}</div>
+                <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} onClick={(e)=>handle_appointment(e)}>
+                    {time_slots[i]}
+                </button>
                 )
             }
         </div>
