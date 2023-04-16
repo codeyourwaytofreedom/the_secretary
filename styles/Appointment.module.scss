@@ -31,7 +31,6 @@
         &_center{
             height: 160px;
             background-color: rgb(222, 219, 219);
-            font-family: 'Lora', serif !important;
             display: grid;
             justify-content: center;
             align-items: center;
@@ -67,7 +66,6 @@
     &_edit{
         width: 100%;
         height: 50px;
-        font-family: 'Lora', serif !important;
         font-size: large;
         color: whitesmoke;
         font-weight: bold;
@@ -87,16 +85,15 @@
         justify-content: center;
     }
     &_appointment{
-        border:2px solid blue;
-        height: 150px;
+        height: 200px;
     }
     &_schedule{
-        border: 2px solid purple;
         height: 400px;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 5px;
         &_each{
-            border:1px solid salmon;
+            border:1px solid #2f1b41;;
         }
     }
 }

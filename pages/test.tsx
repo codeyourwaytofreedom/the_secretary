@@ -1,6 +1,7 @@
 import a from "../styles/Appointment.module.css";
 import { useEffect, useState } from "react";
 import Cal from "../components/calendar";
+import Current from "../components/current";
 
 const Test = () => {
     // Set the start time and end time
@@ -16,10 +17,7 @@ const Test = () => {
         time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false}))
     }
     
-    const today = new Date();
-
-    const formattedDate = today.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"});
-    const [selected_date, setDate] = useState<Date>(today);
+    const [selected_date, setDate] = useState<Date>(new Date());
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
@@ -42,36 +40,7 @@ const Test = () => {
     <>
     <div className={a.double}>
         <div className={a.console}>
-            <div className={a.console_current}>
-                <div className={a.console_current_top}>
-                    {
-                        [...Array(10)].map((e,i) =>
-                        <>
-                        <span key={i} id={a.holder}>
-                        </span>
-                        </>
-
-                    )
-                    }
-                </div>
-                <div className={a.console_current_center}>
-                        <div>
-                            <div>{formattedDate!}</div>
-                            <div suppressHydrationWarning>{currentTime!}</div>
-                        </div>
-                </div>
-                <div className={a.console_current_holes}>
-                {
-                        [...Array(10)].map((e,i) =>
-                        <>
-                        <span key={i} id={a.oval}>
-                        </span>
-                        </>
-
-                    )
-                    }
-                </div>
-            </div>
+            <Current currentTime={currentTime} />
             <div className={a.console_calendar}>
                 <Cal selected_date={selected_date} setDate={setDate}/>
             </div>
@@ -82,7 +51,7 @@ const Test = () => {
         <div className={a.detail}>
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
-            today.toDateString() === selected_date.toDateString() && 
+            new Date().toDateString() === selected_date.toDateString() && 
             <div className={a.detail_appointment}>
                 Current Appointment details go here...
             </div>
@@ -94,7 +63,7 @@ const Test = () => {
                 <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
                     style={{backgroundColor: new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
                     &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z")
-                    ? "red" : "yellow"
+                    ? "red" : "rgb(222, 219, 219)"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {time_slots[i]}

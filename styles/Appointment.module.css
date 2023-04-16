@@ -32,7 +32,6 @@
 .console_current_center {
   height: 160px;
   background-color: rgb(222, 219, 219);
-  font-family: "Lora", serif !important;
   display: grid;
   justify-content: center;
   align-items: center;
@@ -68,7 +67,6 @@
 .console_edit {
   width: 100%;
   height: 50px;
-  font-family: "Lora", serif !important;
   font-size: large;
   color: whitesmoke;
   font-weight: bold;
@@ -88,15 +86,14 @@
   justify-content: center;
 }
 .detail_appointment {
-  border: 2px solid blue;
-  height: 150px;
+  height: 200px;
 }
 .detail_schedule {
-  border: 2px solid purple;
   height: 400px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 5px;
 }
 .detail_schedule_each {
-  border: 1px solid salmon;
+  border: 1px solid #2f1b41;
 }/*# sourceMappingURL=Appointment.module.css.map */
