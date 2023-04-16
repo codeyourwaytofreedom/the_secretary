@@ -4,45 +4,34 @@ import Cal from "../components/calendar";
 
 const Test = () => {
     // Set the start time and end time
-const startTime = new Date();
-startTime.setHours(9, 0, 0, 0);
+    const startTime = new Date();
+    startTime.setHours(9, 0, 0, 0);
 
-const endTime = new Date();
-endTime.setHours(18, 0, 0, 0);
+    const endTime = new Date();
+    endTime.setHours(18, 0, 0, 0);
 
-const time_slots:string[] = [];
+    const time_slots:string[] = [];
 
-for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
-    console.log(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
-    time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
-}
-  
-const today = new Date();
-const formattedDate = today.toLocaleDateString("tr-TR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-    });
-const [selected_date, setDate] = useState<Date>(today);
-const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString("tr-TR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    }));
+    for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
+        time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false}))
+    }
+    
+    const today = new Date();
 
+    const formattedDate = today.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"});
+    const [selected_date, setDate] = useState<Date>(today);
+    const [currentTime, setCurrentTime] = 
+                        useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
+
+    //display time
     useEffect(() => {
     const interval = setInterval(() => {
-        const time = new Date().toLocaleTimeString("tr-TR", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          })
-      setCurrentTime(time);
+        const time = new Date().toLocaleTimeString("tr-TR", {hour: "2-digit",minute: "2-digit",hour12: false,})
+        setCurrentTime(time);
     }, 60000);
-
-        return () => {
-        clearInterval(interval);
-        };
+    return () => {
+    clearInterval(interval);
+    };
     }, []);
 
     const handle_appointment = (e:any) => {
@@ -102,7 +91,12 @@ const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeSt
         <div className={a.detail_schedule}>
             {
                 [...Array(16)].map((e,i)=>
-                <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} onClick={(e)=>handle_appointment(e)}>
+                <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
+                    style={{backgroundColor: new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
+                    &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z")
+                    ? "red" : "yellow"
+                    }}
+                    onClick={(e)=>handle_appointment(e)}>
                     {time_slots[i]}
                 </button>
                 )
