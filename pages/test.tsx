@@ -18,6 +18,7 @@ const Test = () => {
     }
     
     const [selected_date, setDate] = useState<Date>(new Date());
+    const [selected_slot, setSelectedSlot] = useState<string>("")
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
@@ -33,7 +34,12 @@ const Test = () => {
     }, []);
 
     const handle_appointment = (e:any) => {
-        console.log(e.currentTarget.value)
+        selected_date.setHours(e.target.value.split(":")[0])
+        selected_date.setMinutes(e.target.value.split(":")[1])
+
+        console.log(e.target.value)
+
+        setSelectedSlot(e.target.value)
     }
 
     return ( 
@@ -48,6 +54,7 @@ const Test = () => {
                 <button className={a.console_edit}>LOG OUT</button>
             </div>
         </div>
+
         <div className={a.detail}>
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
@@ -63,7 +70,8 @@ const Test = () => {
                 <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
                     style={{backgroundColor: new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
                     &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z")
-                    ? "red" : "rgb(222, 219, 219)"
+                    ? "red" : "rgb(222, 219, 219)",
+                    border: time_slots[i] === selected_slot ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {time_slots[i]}
