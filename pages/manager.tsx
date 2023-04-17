@@ -68,9 +68,17 @@ const Manager = () => {
                         <p>{selected_slot}</p>
                     </div>
                     <div id={a.info}>
-                        Hello Deniz
-                    </div>
-                    
+                        <div id={a.line}>
+                            <span>Patient:</span><span contentEditable></span>
+                        </div>
+                        <div id={a.line}>
+                            <span>Appoint. for:</span><span contentEditable></span>
+                        </div>
+                        <div id={a.line}>
+                            <span>Additional notes:</span>
+                        </div>
+                        <div contentEditable id={a.additional}></div>
+                    </div>  
                 </div>
             </div>
         }
@@ -83,7 +91,7 @@ const Manager = () => {
                     &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z") 
                     && 
                     selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}) === new Date().toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})
-                    ? "red" : "rgb(222, 219, 219)",
+                    ? "#c50851" : "rgb(222, 219, 219)",
                     border: time_slots[i] === selected_slot ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>

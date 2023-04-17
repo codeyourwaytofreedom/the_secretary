@@ -77,6 +77,7 @@
     width: 100%;
     padding: 20px;
     padding-top: 50px;
+    min-width: 700px;
     h1{
         background-color: #2f1b41;
         color: yellow;
@@ -84,16 +85,17 @@
         justify-content: center;
     }
     &_appointment{
-        height: 200px;
+        height: 250px;
         display: grid;
         justify-content: center;
         align-items: center;
         #shell{
-            border: 2px solid blue;
             padding: 10px;
             display: flex;
+            column-gap: 10px;
+            border: 1px solid #2f1b41;
+            border-radius: 20px;
             #clock{
-                border: 2px solid green;
                 text-align: center;
                 img{
                     object-fit: contain;
@@ -102,7 +104,42 @@
                 }
             }
             #info{
-                border: 2px solid pink;
+                max-width: 500px;
+                padding: 10px;
+                #line{
+                    display: flex;
+                    padding: 5px;
+                    :nth-child(1){
+                        font-weight: bold; 
+                        text-decoration: underline;
+                        width: 150px;
+                    }
+                    :nth-child(2){
+                        width: 350px;
+                        max-height: 50px;
+                        overflow: scroll;
+                        min-width: 90px;
+                        border-bottom: 1px dashed purple;
+                        outline: none;
+                        color: #c50851;
+                        &::-webkit-scrollbar {
+                            display: none;
+                        }
+                    }
+                }
+                #additional{
+                    max-width: 100%;
+                    line-height: 21px;
+                    max-height: 100px;
+                    overflow: scroll;
+                    min-width: 90px;
+                    border-bottom: 1px dashed purple;
+                    outline: none;
+                    color: #c50851;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                }
             }
         }
     }

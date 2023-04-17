@@ -77,6 +77,7 @@
   width: 100%;
   padding: 20px;
   padding-top: 50px;
+  min-width: 700px;
 }
 .detail h1 {
   background-color: #2f1b41;
@@ -85,18 +86,20 @@
   justify-content: center;
 }
 .detail_appointment {
-  height: 200px;
+  height: 250px;
   display: grid;
   justify-content: center;
   align-items: center;
 }
 .detail_appointment #shell {
-  border: 2px solid blue;
   padding: 10px;
   display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  border: 1px solid #2f1b41;
+  border-radius: 20px;
 }
 .detail_appointment #shell #clock {
-  border: 2px solid green;
   text-align: center;
 }
 .detail_appointment #shell #clock img {
@@ -106,7 +109,42 @@
   height: 90px;
 }
 .detail_appointment #shell #info {
-  border: 2px solid pink;
+  max-width: 500px;
+  padding: 10px;
+}
+.detail_appointment #shell #info #line {
+  display: flex;
+  padding: 5px;
+}
+.detail_appointment #shell #info #line :nth-child(1) {
+  font-weight: bold;
+  text-decoration: underline;
+  width: 150px;
+}
+.detail_appointment #shell #info #line :nth-child(2) {
+  width: 350px;
+  max-height: 50px;
+  overflow: scroll;
+  min-width: 90px;
+  border-bottom: 1px dashed purple;
+  outline: none;
+  color: #c50851;
+}
+.detail_appointment #shell #info #line :nth-child(2)::-webkit-scrollbar {
+  display: none;
+}
+.detail_appointment #shell #info #additional {
+  max-width: 100%;
+  line-height: 21px;
+  max-height: 100px;
+  overflow: scroll;
+  min-width: 90px;
+  border-bottom: 1px dashed purple;
+  outline: none;
+  color: #c50851;
+}
+.detail_appointment #shell #info #additional::-webkit-scrollbar {
+  display: none;
 }
 .detail_schedule {
   height: 400px;
