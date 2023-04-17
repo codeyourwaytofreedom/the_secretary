@@ -1,9 +1,17 @@
 import a from "../styles/Appointment.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cal from "../components/calendar";
 import Current from "../components/current";
 import Image from "next/image";
 import clock from "../public/clock.png";
+
+type appointment = {
+    date: object,
+    slot:string,
+    patient:string,
+    for:string,
+    additional:string
+}
 
 const Manager = () => {
     // Set the start time and end time
@@ -24,6 +32,10 @@ const Manager = () => {
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
+    const patient = useRef<HTMLSpanElement>(null);
+    const appoint_for = useRef<HTMLSpanElement>(null);
+    const additional = useRef<HTMLDivElement>(null);
+
     //display time
     useEffect(() => {
     const interval = setInterval(() => {
@@ -38,19 +50,23 @@ const Manager = () => {
     const handle_appointment = (e:any) => {
         selected_date.setHours(e.target.value.split(":")[0])
         selected_date.setMinutes(e.target.value.split(":")[1])
-
-        console.log(e.target.value)
-
         setSelectedSlot(e.target.value)
     }
 
     const handle_register = async () => {
         const res = await fetch("http://localhost:3000/api/manager",{
             method:"POST",
-            body:selected_slot
+            body:JSON.stringify(
+                {
+                    date: selected_date,
+                    slot:selected_slot,
+                    patient:patient.current?.innerText,
+                    for:appoint_for.current?.innerText,
+                    additional:additional.current?.innerText
+                } as appointment
+            )
         })
-        const data = await res.json();
-        console.log(data)
+        const data = await res.json();   
     }
 
     return ( 
@@ -78,15 +94,15 @@ const Manager = () => {
                     </div>
                     <div id={a.info}>
                         <div id={a.line}>
-                            <span>Patient:</span><span contentEditable></span>
+                            <span>Patient:</span><span contentEditable ref={patient}></span>
                         </div>
                         <div id={a.line}>
-                            <span>Appoint. for:</span><span contentEditable></span>
+                            <span>Appoint. for:</span><span contentEditable ref={appoint_for}></span>
                         </div>
                         <div id={a.line}>
                             <span>Additional notes:</span>
                         </div>
-                        <div contentEditable id={a.additional}></div>
+                        <div contentEditable id={a.additional} ref={additional}></div>
                     </div>  
                     <div>
                         <button onClick={handle_register}>Test Manager Backend</button>
