@@ -44,6 +44,15 @@ const Manager = () => {
         setSelectedSlot(e.target.value)
     }
 
+    const handle_register = async () => {
+        const res = await fetch("http://localhost:3000/api/manager",{
+            method:"POST",
+            body:selected_slot
+        })
+        const data = await res.json();
+        console.log(data)
+    }
+
     return ( 
     <>
     <div className={a.double}>
@@ -79,6 +88,9 @@ const Manager = () => {
                         </div>
                         <div contentEditable id={a.additional}></div>
                     </div>  
+                    <div>
+                        <button onClick={handle_register}>Test Manager Backend</button>
+                    </div>
                 </div>
             </div>
         }

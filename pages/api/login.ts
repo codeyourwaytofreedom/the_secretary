@@ -9,16 +9,10 @@ interface Clinic {
   password: string;
 }
 
-interface ip_catch {
-  req: NextApiRequest;
-}
-
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   const token = jwt.sign({ userId: "7fgh" }, (process.env.JWT_SECRET as string));
   res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
   res.status(200).json({ message: 'Cookie set successfully', url:"/manager" });
