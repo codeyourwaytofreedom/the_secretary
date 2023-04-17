@@ -4,6 +4,7 @@ import Cal from "../components/calendar";
 import Current from "../components/current";
 import Image from "next/image";
 import clock from "../public/clock.png";
+import Cookies from 'js-cookie';
 
 type appointment = {
     date: object,
