@@ -57,7 +57,7 @@ const Manager = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await fetch('http://localhost:3000/api/retrieve');
+          const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date}`);
           const data = await response.json();
           console.log(data)
         };

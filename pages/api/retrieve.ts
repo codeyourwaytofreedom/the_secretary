@@ -15,6 +15,7 @@ export default async function handler(
     const token = cookies.token;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
     console.log(decodedToken)
+    console.log(req.query)
 
   } catch (jwt_verf_error) {
     console.log(jwt_verf_error)
