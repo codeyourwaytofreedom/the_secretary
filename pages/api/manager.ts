@@ -22,10 +22,12 @@ export default async function handler(
         console.log("no user found");
         return;
       }
+      console.log(JSON.parse(req.body))
+
       //updating the relevant clinic's appointment property.
       const result = await clinics_collection.updateOne(
         { name: decodedToken.userId },
-        { $push: { appointments: "yet another appointment" } }
+        { $push: { appointments: JSON.parse(req.body) } }
       );
       
       if (result.modifiedCount === 1) {
@@ -40,7 +42,6 @@ export default async function handler(
   } catch (jwt_verf_error) {
     console.log(jwt_verf_error)
   }
-
-    //console.log(JSON.parse(req.body))
-    res.status(200).json({ app: 'Appointment Manager' });
+  
+  res.status(200).json({ app: 'Appointment Manager' });
 }

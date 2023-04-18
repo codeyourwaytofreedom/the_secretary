@@ -7,7 +7,7 @@ import clock from "../public/clock.png";
 import Cookies from 'js-cookie';
 
 type appointment = {
-    date: object,
+    date: string,
     slot:string,
     patient:string,
     for:string,
@@ -15,6 +15,7 @@ type appointment = {
 }
 
 const Manager = () => {
+    console.log(new Date())
     // Set the start time and end time
     const startTime = new Date();
     startTime.setHours(9, 0, 0, 0);
@@ -59,7 +60,7 @@ const Manager = () => {
             method:"POST",
             body:JSON.stringify(
                 {
-                    date: selected_date,
+                    date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
                     slot:selected_slot,
                     patient:patient.current?.innerText,
                     for:appoint_for.current?.innerText,
