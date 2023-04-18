@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from './mongodb';
-import * as jose from 'jose';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 
@@ -9,27 +8,38 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const cookies = cookie.parse(req.headers.cookie || '');
-  console.log(cookies)
-  const token = cookies.token;
-  console.log(token)
-  const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string);
-  console.log(decodedToken)
-/*   try {
-    await jose.jwtVerify((token as string), secret);
-    console.log("jwt valid")
-  } catch (error) {
-    console.log(error)
-  } */
 
+  try {
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
 
-
-/*     try {
+    try {
       const client = await connectToDatabase();
-      console.log(client)
-    } catch (error) {
-      console.log(error)
-    } */
+      const clinics_collection = client.db("members").collection("clinics");
+      const member_clinic = await clinics_collection.findOne({name:decodedToken.userId});
+      if(!member_clinic){
+        console.log("no user found");
+        return;
+      }
+      //updating the relevant clinic's appointment property.
+      const result = await clinics_collection.updateOne(
+        { name: decodedToken.userId },
+        { $push: { appointments: "yet another appointment" } }
+      );
+      
+      if (result.modifiedCount === 1) {
+        console.log('Successfully updated appointments array');
+      } else {
+        console.log('Unable to update appointments array');
+      }
+
+    } catch (db_error) {
+      console.log(db_error)
+    }
+  } catch (jwt_verf_error) {
+    console.log(jwt_verf_error)
+  }
 
     //console.log(JSON.parse(req.body))
     res.status(200).json({ app: 'Appointment Manager' });
