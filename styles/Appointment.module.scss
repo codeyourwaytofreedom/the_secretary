@@ -144,9 +144,8 @@
         }
     }
     &_schedule{
-        height: 400px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 5px;
         &_each{
             border:1px solid #2f1b41;

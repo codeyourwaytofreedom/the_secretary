@@ -147,9 +147,8 @@
   display: none;
 }
 .detail_schedule {
-  height: 400px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 5px;
 }
 .detail_schedule_each {

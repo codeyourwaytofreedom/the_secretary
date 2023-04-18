@@ -49,6 +49,22 @@ const Manager = () => {
     };
     }, []);
 
+    const fetchData = async () => {
+        const response = await fetch('/api/myRoute');
+        const data = await response.json();
+        console.log(data);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const response = await fetch('http://localhost:3000/api/retrieve');
+          const data = await response.json();
+          console.log(data)
+        };
+    
+        fetchData();
+    }, [selected_date]);
+
     const handle_appointment = (e:any) => {
         selected_date.setHours(e.target.value.split(":")[0])
         selected_date.setMinutes(e.target.value.split(":")[1])
@@ -122,7 +138,8 @@ const Manager = () => {
                     && 
                     selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}) === new Date().toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})
                     ? "#c50851" : "rgb(222, 219, 219)",
-                    border: time_slots[i] === selected_slot ? "2px solid #c50851" : "1px solid #2f1b41"
+                    border: time_slots[i] === selected_slot 
+                    ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {time_slots[i]}

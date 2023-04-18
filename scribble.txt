@@ -21,3 +21,33 @@ export async function middleware(request: NextRequest,response:NextResponse) {
     }
   } */
 }
+
+
+
+
+
+    try {
+      const client = await connectToDatabase();
+      const clinics_collection = client.db("members").collection("clinics");
+      const member_clinic = await clinics_collection.findOne({name:decodedToken.userId});
+      if(!member_clinic){
+        console.log("no user found");
+        return;
+      }
+      console.log(JSON.parse(req.body))
+
+      //updating the relevant clinic's appointment property.
+      const result = await clinics_collection.updateOne(
+        { name: decodedToken.userId },
+        { $push: { appointments: JSON.parse(req.body) } }
+      );
+      
+      if (result.modifiedCount === 1) {
+        console.log('Successfully updated appointments array');
+      } else {
+        console.log('Unable to update appointments array');
+      }
+
+    } catch (db_error) {
+      console.log(db_error)
+    }
