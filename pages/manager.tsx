@@ -47,7 +47,15 @@ const Manager = () => {
         additional: string;
     }
 
-    const [day_s_appointments, setDaysAppointents] = useState<Appointment[]>([]);
+    const [day_s_appointments, setDaysAppointents] = useState<Appointment[]>([
+        {
+            date:"temp",
+            slot:"temp",
+            patient:"temp",
+            for:"temp",
+            additional:"temp"
+        }
+    ]);
     const [expand,setExpand] = useState<boolean>(false)
 
     //display time
@@ -63,6 +71,15 @@ const Manager = () => {
 
 
     useEffect(() => {
+        setDaysAppointents([
+            {
+                date:"temp",
+                slot:"temp",
+                patient:"temp",
+                for:"temp",
+                additional:"temp"
+            }
+        ])
         const fetchData = async () => {
           const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}`);
           const data = await response.json();
@@ -91,8 +108,19 @@ const Manager = () => {
                     additional:additional.current?.innerText
                 } as appointment
             )
+        }) 
+        .then(res => res.json())
+        .then(data => {
+            console.log("Registered the appointment", data);
+            setDaysAppointents([...day_s_appointments, {
+                date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
+                slot:selected_slot,
+                patient:patient.current?.innerText,
+                for:appoint_for.current?.innerText,
+                additional:additional.current?.innerText
+            } as Appointment]);
         })
-        const data = await res.json();   
+        .catch(error => console.error("Error occurred:", error));
     }
 
 
@@ -191,6 +219,8 @@ const Manager = () => {
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {
+                        day_s_appointments.filter((app:Appointment) => app.slot === "temp").length === 1 ?
+                        <span><Image src={loading} alt={"loading"}/></span> :
                         day_s_appointments.filter((app:Appointment) => app.slot === time_slots[i]).length !== 0 ?
                         <span><Image src={unavailable} alt={"booked"}/></span> :
                         <span><Image src={available} alt={"available"}/></span>
