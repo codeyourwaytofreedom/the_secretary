@@ -33,13 +33,6 @@ export default async function handler(
 
   } catch (err) {
     console.log(err);
-    if (err instanceof jwt.JsonWebTokenError || err instanceof jwt.TokenExpiredError) {
-      res.status(401).json({ error: "Unauthorized" });
-    } else if (err instanceof MongoError){
-      res.status(500).send("Database related error...");
-    } 
-    else {
-      res.status(503).send({ error: "Service Unavailable" });
-    }
+    res.status(503).send({ error: "Service Unavailable" });
   }
 }

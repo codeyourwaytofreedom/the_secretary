@@ -30,13 +30,23 @@ const Manager = () => {
     }
     
     const [selected_date, setDate] = useState<Date>(new Date());
-    const [selected_slot, setSelectedSlot] = useState<string>("")
+    const [selected_slot, setSelectedSlot] = useState<string>("9:00")
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
     const patient = useRef<HTMLSpanElement>(null);
     const appoint_for = useRef<HTMLSpanElement>(null);
     const additional = useRef<HTMLDivElement>(null);
+
+    const [day_s_appointments, setDaysAppointents] = useState<object[]>([
+        {
+            date: "19.04.2023",
+            slot: "16:00",
+            patient: "Sophie Turner",
+            for: "Examination",
+            additional: "Vienna branch"
+        }
+    ]);
 
     //display time
     useEffect(() => {
@@ -49,20 +59,15 @@ const Manager = () => {
     };
     }, []);
 
-    const fetchData = async () => {
-        const response = await fetch('/api/myRoute');
-        const data = await response.json();
-        console.log(data);
-    };
 
     useEffect(() => {
         const fetchData = async () => {
           const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}`);
           const data = await response.json();
+          setDaysAppointents(data);
           console.log(data)
         };
-    
-        fetchData();
+        //fetchData();
     }, [selected_date]);
 
     const handle_appointment = (e:any) => {
@@ -87,6 +92,10 @@ const Manager = () => {
         const data = await res.json();   
     }
 
+    interface Appoint {
+        date:string
+      }
+
     return ( 
     <>
     <div className={a.double}>
@@ -103,7 +112,8 @@ const Manager = () => {
         <div className={a.detail}>
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
-            new Date().toDateString() === selected_date.toDateString() && 
+           /*  new Date().toDateString() === selected_date.toDateString() &&  */
+           day_s_appointments.filter((app:any) => app.slot === selected_slot).length !== 0 &&
             <div className={a.detail_appointment}>
                 <div id={a.shell}>
                     <div id={a.clock}>
@@ -142,7 +152,7 @@ const Manager = () => {
                     ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
-                    {time_slots[i]}
+                    {time_slots[i]} {day_s_appointments.length}
                 </button>
                 )
             }
