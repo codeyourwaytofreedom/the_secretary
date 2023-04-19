@@ -4,7 +4,7 @@ import Cal from "../components/calendar";
 import Current from "../components/current";
 import Image from "next/image";
 import clock from "../public/clock.png";
-import Cookies from 'js-cookie';
+import add from "../public/add.png";
 
 type appointment = {
     date: string,
@@ -37,8 +37,15 @@ const Manager = () => {
     const patient = useRef<HTMLSpanElement>(null);
     const appoint_for = useRef<HTMLSpanElement>(null);
     const additional = useRef<HTMLDivElement>(null);
+    type Appointment = {
+        date: string;
+        slot: string;
+        patient: string;
+        for: string;
+        additional: string;
+    }
 
-    const [day_s_appointments, setDaysAppointents] = useState<object[]>([
+    const [day_s_appointments, setDaysAppointents] = useState<Appointment[]>([
         {
             date: "19.04.2023",
             slot: "16:00",
@@ -47,6 +54,7 @@ const Manager = () => {
             additional: "Vienna branch"
         }
     ]);
+    const [expand,setExpand] = useState<boolean>(false)
 
     //display time
     useEffect(() => {
@@ -73,7 +81,8 @@ const Manager = () => {
     const handle_appointment = (e:any) => {
         selected_date.setHours(e.target.value.split(":")[0])
         selected_date.setMinutes(e.target.value.split(":")[1])
-        setSelectedSlot(e.target.value)
+        setSelectedSlot(e.target.value);
+        setExpand(false)
     }
 
     const handle_register = async () => {
@@ -92,9 +101,6 @@ const Manager = () => {
         const data = await res.json();   
     }
 
-    interface Appoint {
-        date:string
-      }
 
     return ( 
     <>
@@ -112,8 +118,9 @@ const Manager = () => {
         <div className={a.detail}>
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
-           /*  new Date().toDateString() === selected_date.toDateString() &&  */
-           day_s_appointments.filter((app:any) => app.slot === selected_slot).length !== 0 &&
+            new Date().toDateString() === selected_date.toDateString() && 
+           day_s_appointments.filter((app:Appointment) => app.slot === selected_slot).length !== 0 
+           ?
             <div className={a.detail_appointment}>
                 <div id={a.shell}>
                     <div id={a.clock}>
@@ -122,21 +129,58 @@ const Manager = () => {
                     </div>
                     <div id={a.info}>
                         <div id={a.line}>
-                            <span>Patient:</span><span contentEditable ref={patient}></span>
+                            <span>Patient:</span><span contentEditable ref={patient}>
+                                {day_s_appointments.filter((app:Appointment) => app.slot === selected_slot)[0].patient}
+                            </span>
                         </div>
                         <div id={a.line}>
-                            <span>Appoint. for:</span><span contentEditable ref={appoint_for}></span>
+                            <span>Appoint. for:</span><span contentEditable ref={appoint_for}>
+                            {day_s_appointments.filter((app:Appointment) => app.slot === selected_slot)[0].for}
+                            </span>
                         </div>
                         <div id={a.line}>
                             <span>Additional notes:</span>
                         </div>
-                        <div contentEditable id={a.additional} ref={additional}></div>
+                        <div contentEditable id={a.additional} ref={additional}>
+                        {day_s_appointments.filter((app:Appointment) => app.slot === selected_slot)[0].additional}
+                        </div>
                     </div>  
                     <div>
-                        <button onClick={handle_register}>Test Manager Backend</button>
+                        <button onClick={handle_register}>Update Appointment</button><br />
+                        <button onClick={handle_register}>Remove Appointment</button>
                     </div>
                 </div>
             </div>
+            :
+            <div className={a.detail_appointment}>
+            <div id={a.shell}>
+                <div id={a.clock} onClick={()=> setExpand(true)}>
+                    <Image src={add} alt={"add"}/>
+                    <p>{selected_slot}</p>
+                </div>
+            {
+                expand &&
+                <>
+                <div id={a.info}>
+                    <div id={a.line}>
+                        <span>Patient:</span><span contentEditable ref={patient}></span>
+                    </div>
+                    <div id={a.line}>
+                        <span>Appoint. for:</span><span contentEditable ref={appoint_for}></span>
+                    </div>
+                    <div id={a.line}>
+                        <span>Additional notes:</span>
+                    </div>
+                    <div contentEditable id={a.additional} ref={additional}></div>
+                </div>  
+                <div>
+                    <button onClick={handle_register}>Add Appointment</button>
+                </div>
+                </>
+            }
+            </div>
+            </div>
+
         }
 
         <div className={a.detail_schedule}>

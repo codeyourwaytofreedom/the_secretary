@@ -101,6 +101,7 @@
 }
 .detail_appointment #shell #clock {
   text-align: center;
+  cursor: pointer;
 }
 .detail_appointment #shell #clock img {
   -o-object-fit: contain;
