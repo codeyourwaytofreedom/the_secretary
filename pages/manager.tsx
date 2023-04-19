@@ -57,7 +57,7 @@ const Manager = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date}`);
+          const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}`);
           const data = await response.json();
           console.log(data)
         };

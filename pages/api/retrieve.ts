@@ -4,6 +4,7 @@ import { connectToDatabase } from './mongodb';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import console from 'console';
+import { MongoError } from 'mongodb';
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,12 +15,31 @@ export default async function handler(
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
-    console.log(decodedToken)
-    console.log(req.query)
 
-  } catch (jwt_verf_error) {
-    console.log(jwt_verf_error)
+    const {userId} = decodedToken;
+    const {date} = req.query;
+
+    const client = await connectToDatabase();
+    const clinic = await client.db("members").collection("clinics").findOne({name:userId});
+    const appointments = clinic!.appointments;
+
+    interface Appoint {
+      date:string
+    }
+    const day_s_appointments = appointments.filter((app:Appoint) => app.date === date);
+
+    console.log(day_s_appointments);
+    res.status(200).json(day_s_appointments);
+
+  } catch (err) {
+    console.log(err);
+    if (err instanceof jwt.JsonWebTokenError || err instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ error: "Unauthorized" });
+    } else if (err instanceof MongoError){
+      res.status(500).send("Database related error...");
+    } 
+    else {
+      res.status(503).send({ error: "Service Unavailable" });
+    }
   }
-  
-  res.status(200).json({ result:"will display appointments found" });
 }
