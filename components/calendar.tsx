@@ -14,7 +14,7 @@ const Cal:NextPage<date> = ({selected_date, setDate}) => {
             <Calendar locale={"en-US"} 
                 maxDate={new Date(2024, 0, 1)} 
                 minDate={new Date(2023, 0, 1)}
-                onClickDay={(date) => {setDate(date); console.log(date.toLocaleString('en-US',{ weekday: 'long' }))}}
+                onClickDay={(date) => {setDate(date)}}
                 tileDisabled={({date}) => date.toLocaleString('en-US',{ weekday: 'long' }) === "Sunday" } 
             />     
         </>    

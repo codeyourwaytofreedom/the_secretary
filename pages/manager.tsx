@@ -5,6 +5,9 @@ import Current from "../components/current";
 import Image from "next/image";
 import clock from "../public/clock.png";
 import add from "../public/add.png";
+import available from "../public/available.png";
+import unavailable from "../public/unavailable.png";
+import loading from "../public/loading.png";
 
 type appointment = {
     date: string,
@@ -15,7 +18,6 @@ type appointment = {
 }
 
 const Manager = () => {
-    console.log(new Date())
     // Set the start time and end time
     const startTime = new Date();
     startTime.setHours(9, 0, 0, 0);
@@ -45,15 +47,7 @@ const Manager = () => {
         additional: string;
     }
 
-    const [day_s_appointments, setDaysAppointents] = useState<Appointment[]>([
-        {
-            date: "19.04.2023",
-            slot: "16:00",
-            patient: "Sophie Turner",
-            for: "Examination",
-            additional: "Vienna branch"
-        }
-    ]);
+    const [day_s_appointments, setDaysAppointents] = useState<Appointment[]>([]);
     const [expand,setExpand] = useState<boolean>(false)
 
     //display time
@@ -75,7 +69,7 @@ const Manager = () => {
           setDaysAppointents(data);
           console.log(data)
         };
-        //fetchData();
+        fetchData();
     }, [selected_date]);
 
     const handle_appointment = (e:any) => {
@@ -118,7 +112,7 @@ const Manager = () => {
         <div className={a.detail}>
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
-            new Date().toDateString() === selected_date.toDateString() && 
+            /* new Date().toDateString() === selected_date.toDateString() &&  */
            day_s_appointments.filter((app:Appointment) => app.slot === selected_slot).length !== 0 
            ?
             <div className={a.detail_appointment}>
@@ -196,6 +190,11 @@ const Manager = () => {
                     ? "2px solid #c50851" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
+                    {
+                        day_s_appointments.filter((app:Appointment) => app.slot === time_slots[i]).length !== 0 ?
+                        <span><Image src={unavailable} alt={"booked"}/></span> :
+                        <span><Image src={available} alt={"available"}/></span>
+                    }
                     {time_slots[i]} {day_s_appointments.length}
                 </button>
                 )

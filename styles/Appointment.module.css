@@ -155,4 +155,9 @@
 .detail_schedule_each {
   border: 1px solid #2f1b41;
   height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
 }/*# sourceMappingURL=Appointment.module.css.map */
