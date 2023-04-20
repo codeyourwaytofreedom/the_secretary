@@ -90,6 +90,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .detail_appointment #shell {
   padding: 10px;
@@ -98,6 +99,20 @@
        column-gap: 10px;
   border: 1px solid #2f1b41;
   border-radius: 20px;
+  position: relative;
+}
+.detail_appointment #shell #temp {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #2f1b41;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  color: #c50851;
 }
 .detail_appointment #shell #clock {
   text-align: center;

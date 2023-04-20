@@ -56,7 +56,8 @@ const Manager = () => {
             additional:"temp"
         }
     ]);
-    const [expand,setExpand] = useState<boolean>(false)
+    const [expand,setExpand] = useState<boolean>(false);
+    const [feedback, setFeedBack] = useState<string>("");
 
     //display time
     useEffect(() => {
@@ -93,7 +94,8 @@ const Manager = () => {
         selected_date.setHours(e.target.value.split(":")[0])
         selected_date.setMinutes(e.target.value.split(":")[1])
         setSelectedSlot(e.target.value);
-        setExpand(false)
+        setExpand(false);
+        setFeedBack("")
     }
 
     const handle_register = async () => {
@@ -124,6 +126,7 @@ const Manager = () => {
     }
 
     const handle_update = async () => {
+        setFeedBack("Updating the appointment...")
         const res = await fetch("http://localhost:3000/api/update",{
             method:"POST",
             body:JSON.stringify(
@@ -139,6 +142,10 @@ const Manager = () => {
         .then(res => res.json())
         .then(data => {
             console.log("Updated the appointment", data);
+            setFeedBack(data.message);
+            /* setTimeout(() => {
+                setFeedBack("");
+            }, 1000); */
         })
         .catch(error => console.error("Error occurred:", error));
     }
@@ -165,6 +172,7 @@ const Manager = () => {
            ?
             <div className={a.detail_appointment}>
                 <div id={a.shell}>
+                    {feedback.length !== 0 && <div id={a.temp}>{feedback}</div>}
                     <div id={a.clock}>
                         <Image src={clock} alt={"clock"}/>
                         <p>{selected_slot}</p>
@@ -196,6 +204,7 @@ const Manager = () => {
             :
             <div className={a.detail_appointment}>
             <div id={a.shell}>
+                {feedback.length !== 0 && <div id={a.temp}>{feedback}</div>}
                 <div id={a.clock} onClick={()=> setExpand(true)}>
                     <Image src={add} alt={"add"}/>
                     <p>{selected_slot}</p>
