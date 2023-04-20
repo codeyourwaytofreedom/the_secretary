@@ -123,6 +123,26 @@ const Manager = () => {
         .catch(error => console.error("Error occurred:", error));
     }
 
+    const handle_update = async () => {
+        const res = await fetch("http://localhost:3000/api/update",{
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
+                    slot:selected_slot,
+                    patient:patient.current?.innerText,
+                    for:appoint_for.current?.innerText,
+                    additional:additional.current?.innerText
+                } as appointment
+            )
+        }) 
+        .then(res => res.json())
+        .then(data => {
+            console.log("Updated the appointment", data);
+        })
+        .catch(error => console.error("Error occurred:", error));
+    }
+
 
     return ( 
     <>
@@ -168,7 +188,7 @@ const Manager = () => {
                         </div>
                     </div>  
                     <div>
-                        <button onClick={handle_register}>Update Appointment</button><br />
+                        <button onClick={handle_update}>Update Appointment</button><br />
                         <button onClick={handle_register}>Remove Appointment</button>
                     </div>
                 </div>
