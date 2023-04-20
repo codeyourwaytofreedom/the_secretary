@@ -99,6 +99,7 @@ const Manager = () => {
     }
 
     const handle_register = async () => {
+        setFeedBack("Adding a new appointment...")
         const res = await fetch("http://localhost:3000/api/manager",{
             method:"POST",
             body:JSON.stringify(
@@ -121,6 +122,7 @@ const Manager = () => {
                 for:appoint_for.current?.innerText,
                 additional:additional.current?.innerText
             } as Appointment]);
+            setFeedBack("Successfully added appointment");
         })
         .catch(error => console.error("Error occurred:", error));
     }
@@ -172,7 +174,13 @@ const Manager = () => {
            ?
             <div className={a.detail_appointment}>
                 <div id={a.shell}>
-                    {feedback.length !== 0 && <div id={a.temp}>{feedback}</div>}
+                    {feedback.length !== 0 && 
+                        <div id={a.temp} 
+                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "yellow" : "#2f1b41",
+                                    color:feedback.toLocaleLowerCase().includes("success") ? "green" : "white",
+                                    fontWeight:feedback.toLocaleLowerCase().includes("success") ? "bold" : "normal",
+                            }}>{feedback}
+                        </div>}
                     <div id={a.clock}>
                         <Image src={clock} alt={"clock"}/>
                         <p>{selected_slot}</p>
@@ -204,7 +212,13 @@ const Manager = () => {
             :
             <div className={a.detail_appointment}>
             <div id={a.shell}>
-                {feedback.length !== 0 && <div id={a.temp}>{feedback}</div>}
+            {feedback.length !== 0 && 
+                        <div id={a.temp} 
+                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "yellow" : "#2f1b41",
+                                    color:feedback.toLocaleLowerCase().includes("success") ? "green" : "white",
+                                    fontWeight:feedback.toLocaleLowerCase().includes("success") ? "bold" : "normal",
+                            }}>{feedback}
+                        </div>}
                 <div id={a.clock} onClick={()=> setExpand(true)}>
                     <Image src={add} alt={"add"}/>
                     <p>{selected_slot}</p>
