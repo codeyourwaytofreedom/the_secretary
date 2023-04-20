@@ -94,9 +94,19 @@
             padding: 10px;
             display: flex;
             column-gap: 10px;
-            border: 1px solid #2f1b41;
+            border: 2px solid #2f1b41;
             border-radius: 20px;
             position: relative;
+            button{
+                border: 2px solid #2f1b41;
+                color: #c50851;
+                width: 90px;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 14px;
+            }
             #temp{
                 position: absolute;
                 top:0; bottom: 0; right: 0; left: 0;
@@ -106,6 +116,23 @@
                 align-items: center;
                 border-radius: 20px;
                 color: #c50851;
+                #loader {
+                    position: absolute;
+                    display: grid;
+                    align-self: center;
+                    left: 20%;
+                    border: 4px solid #f3f3f3; 
+                    border-top: 4px solid #c50851; 
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    animation: spin 2s linear infinite;
+                  }
+                  
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
             }
             #clock{
                 text-align: center;

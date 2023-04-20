@@ -91,8 +91,8 @@ const Manager = () => {
     }, [selected_date]);
 
     const handle_appointment = (e:any) => {
-        selected_date.setHours(e.target.value.split(":")[0])
-        selected_date.setMinutes(e.target.value.split(":")[1])
+        selected_date.setHours(e.target.value?.split(":")[0])
+        selected_date.setMinutes(e.target.value?.split(":")[1])
         setSelectedSlot(e.target.value);
         setExpand(false);
         setFeedBack("")
@@ -145,9 +145,9 @@ const Manager = () => {
         .then(data => {
             console.log("Updated the appointment", data);
             setFeedBack(data.message);
-            /* setTimeout(() => {
+            setTimeout(() => {
                 setFeedBack("");
-            }, 1000); */
+            }, 1000);
         })
         .catch(error => console.error("Error occurred:", error));
     }
@@ -176,10 +176,12 @@ const Manager = () => {
                 <div id={a.shell}>
                     {feedback.length !== 0 && 
                         <div id={a.temp} 
-                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "yellow" : "#2f1b41",
+                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "gold" : "#2f1b41",
                                     color:feedback.toLocaleLowerCase().includes("success") ? "green" : "white",
                                     fontWeight:feedback.toLocaleLowerCase().includes("success") ? "bold" : "normal",
                             }}>{feedback}
+                            {!feedback.toLocaleLowerCase().includes("success") && <div id={a.loader}></div>}
+                             
                         </div>}
                     <div id={a.clock}>
                         <Image src={clock} alt={"clock"}/>
@@ -204,8 +206,8 @@ const Manager = () => {
                         </div>
                     </div>  
                     <div>
-                        <button onClick={handle_update}>Update Appointment</button><br />
-                        <button onClick={handle_register}>Remove Appointment</button>
+                        <button onClick={handle_update}>Update</button><br />
+                        <button onClick={handle_register}>Remove</button>
                     </div>
                 </div>
             </div>
@@ -214,10 +216,11 @@ const Manager = () => {
             <div id={a.shell}>
             {feedback.length !== 0 && 
                         <div id={a.temp} 
-                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "yellow" : "#2f1b41",
+                            style={{background:feedback.toLocaleLowerCase().includes("success") ? "gold" : "#2f1b41",
                                     color:feedback.toLocaleLowerCase().includes("success") ? "green" : "white",
                                     fontWeight:feedback.toLocaleLowerCase().includes("success") ? "bold" : "normal",
                             }}>{feedback}
+                            {!feedback.toLocaleLowerCase().includes("success") && <div id={a.loader}></div>}
                         </div>}
                 <div id={a.clock} onClick={()=> setExpand(true)}>
                     <Image src={add} alt={"add"}/>
@@ -239,7 +242,7 @@ const Manager = () => {
                     <div contentEditable id={a.additional} ref={additional}></div>
                 </div>  
                 <div>
-                    <button onClick={handle_register}>Add Appointment</button>
+                    <button onClick={handle_register}>Add</button>
                 </div>
                 </>
             }
