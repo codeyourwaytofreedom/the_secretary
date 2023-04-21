@@ -121,7 +121,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 10px;
   color: #c50851;
 }
 .detail_appointment #shell #temp #loader {

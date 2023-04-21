@@ -155,6 +155,16 @@ const Manager = () => {
         .catch(error => console.error("Error occurred:", error));
     }
 
+    const handle_logout = async () => {
+        const res = await fetch("http://localhost:3000/api/logout",{
+            method:"GET",
+        }) 
+        .then(res => {
+            window.location.href = res.url;
+        })
+        .catch(error => console.error("Error occurred:", error));
+    }
+
 
     return ( 
     <>
@@ -165,7 +175,7 @@ const Manager = () => {
                 <Cal selected_date={selected_date} setDate={setDate}/>
             </div>
             <div>
-                <button className={a.console_edit}>LOG OUT</button>
+                <button className={a.console_edit} onClick={handle_logout}>LOG OUT</button>
             </div>
         </div>
 
@@ -274,7 +284,7 @@ const Manager = () => {
                     :
                     "#7fa99b",
                     border: time_slots[i] === selected_slot 
-                    ? "3px solid #2f1b41" : "1px solid #2f1b41"
+                    ? "7px solid #2f1b41" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {
