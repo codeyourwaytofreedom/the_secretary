@@ -99,41 +99,47 @@ const Manager = () => {
     }
 
     const handle_register = async () => {
-        setFeedBack("Adding a new appointment...")
-        const res = await fetch("http://localhost:3000/api/manager",{
-            method:"POST",
-            body:JSON.stringify(
-                {
+        if(patient.current!.innerText.length > 10 && appoint_for.current!.innerText.length > 5){
+            setFeedBack("Adding a new appointment...")
+            const res = await fetch("http://localhost:3000/api/manager",{
+                method:"POST",
+                body:JSON.stringify(
+                    {
+                        date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
+                        slot:selected_slot,
+                        patient:patient.current?.innerText,
+                        for:appoint_for.current?.innerText,
+                        additional:additional.current?.innerText
+                    } as appointment
+                )
+            }) 
+            .then(res => res.json())
+            .then(data => {
+                console.log("Registered the appointment", data);
+                setDaysAppointents([...day_s_appointments, {
                     date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
                     slot:selected_slot,
                     patient:patient.current?.innerText,
                     for:appoint_for.current?.innerText,
                     additional:additional.current?.innerText
-                } as appointment
-            )
-        }) 
-        .then(res => res.json())
-        .then(data => {
-            console.log("Registered the appointment", data);
-            setDaysAppointents([...day_s_appointments, {
-                date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
-                slot:selected_slot,
-                patient:patient.current?.innerText,
-                for:appoint_for.current?.innerText,
-                additional:additional.current?.innerText
-            } as Appointment]);
-            setFeedBack("Successfully added appointment");
-            setTimeout(() => {
-                setFeedBack("");
-            }, 1000);
-        })
-        .catch(error => console.error("Error occurred:", error));
+                } as Appointment]);
+                setFeedBack("Successfully added appointment");
+                setTimeout(() => {
+                    setFeedBack("");
+                }, 1000);
+            })
+            .catch(error => console.error("Error occurred:", error));
+        }
+        else{
+            alert("Appointment details missing!\nPatient:Min 10 characters!\nAppoint. For: Min 5 characters!")
+        }
+
     }
 
     const handle_update = async () => {
         setFeedBack("Updating the appointment...")
         const res = await fetch("http://localhost:3000/api/update",{
-            method:"POST",
+            method:"PUT",
             body:JSON.stringify(
                 {
                     date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
@@ -267,7 +273,7 @@ const Manager = () => {
         <div className={a.detail_schedule}>
             {
                 [...Array(16)].map((e,i)=>
-                <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
+                <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]}
                     style={{
                     backgroundColor: 
 /*                     new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
@@ -284,17 +290,10 @@ const Manager = () => {
                     :
                     "#7fa99b",
                     border: time_slots[i] === selected_slot 
-                    ? "7px solid #2f1b41" : "1px solid #2f1b41"
+                    ? "3px solid #2f1b41" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
-                    {
-/*                         day_s_appointments.filter((app:Appointment) => app.slot === "temp").length === 1 ?
-                        <span><Image src={loading} alt={"loading"}/></span> :
-                        day_s_appointments.filter((app:Appointment) => app.slot === time_slots[i]).length !== 0 ?
-                        <span><Image src={unavailable} alt={"booked"}/></span> :
-                        <span><Image src={available} alt={"available"}/></span> */
-                    }
-                    {time_slots[i]} {day_s_appointments.length}
+                    {time_slots[i]} {/* {day_s_appointments.length} */}
                 </button>
                 )
             }

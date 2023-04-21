@@ -42,7 +42,7 @@ export default async function handler(
         res.status(200).json({ message: 'Appointment updated successfully.' });
       } else {
         console.log("Failed to update appointment.");
-        res.json({ message: 'Update failed....' });
+        res.json({ message: 'No change detected....' });
       }
 
     } catch (db_error) {

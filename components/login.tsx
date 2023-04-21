@@ -59,7 +59,7 @@ const Login = () => {
             <div className={l.login_shell}>
                 <form>
                     <div className={l.login_shell_line}>
-                        <input type="text" name="username" ref={user_name}/>
+                        <input type="text" name="username" ref={user_name} autoComplete={"off"}/>
                     </div>
                     <div className={l.login_shell_line}>
                         <input type="password" name="password" ref={password}/>
