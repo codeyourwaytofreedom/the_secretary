@@ -88,6 +88,7 @@ const Manager = () => {
           console.log(data)
         };
         fetchData();
+        if(expand){setExpand(false)}
     }, [selected_date]);
 
     const handle_appointment = (e:any) => {
@@ -251,11 +252,16 @@ const Manager = () => {
                         <div contentEditable id={a.additional} ref={additional}>
                         {day_s_appointments.filter((app:Appointment) => app.slot === selected_slot)[0].additional}
                         </div>
-                    </div>  
+                    </div>
+                    {
+                        selected_date > new Date() || selected_date.toDateString() === new Date().toDateString()  ?
                     <div>
                         <button onClick={handle_update}>Update</button><br />
                         <button onClick={handle_remove}>Remove</button>
-                    </div>
+                    </div> 
+                        : null
+                    }  
+
                 </div>
             </div>
             :
@@ -269,7 +275,9 @@ const Manager = () => {
                             }}>{feedback}
                             {!feedback.toLocaleLowerCase().includes("success") && <div id={a.loader}></div>}
                         </div>}
-                <div id={a.clock} onClick={()=> setExpand(true)}>
+                <div id={a.clock} 
+                    onClick={()=> selected_date > new Date() 
+                                || selected_date.toDateString() === new Date().toDateString()  ? setExpand(true) : null}>
                     <Image src={add} alt={"add"}/>
                     <p>{selected_slot}</p>
                 </div>
