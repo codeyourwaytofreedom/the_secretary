@@ -7,7 +7,7 @@ import clock from "../public/clock.png";
 import add from "../public/add.png";
 import available from "../public/available.png";
 import unavailable from "../public/unavailable.png";
-import loading from "../public/loading.png";
+import active from "../public/click.png";
 
 type appointment = {
     date: string,
@@ -25,14 +25,14 @@ const Manager = () => {
     const endTime = new Date();
     endTime.setHours(18, 0, 0, 0);
 
-    const time_slots:string[] = [];
+    const time_slots:string[] = ["9:00"];
 
     for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
         time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false}))
     }
     
     const [selected_date, setDate] = useState<Date>(new Date());
-    const [selected_slot, setSelectedSlot] = useState<string>("9:00")
+    const [selected_slot, setSelectedSlot] = useState<string>("9:00");
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
@@ -161,6 +161,34 @@ const Manager = () => {
         .catch(error => console.error("Error occurred:", error));
     }
 
+    const handle_remove = async () => {
+        setFeedBack("Removing the appointment...")
+        const res = await fetch("http://localhost:3000/api/remove",{
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
+                    slot:selected_slot,
+                    patient:patient.current?.innerText,
+                    for:appoint_for.current?.innerText,
+                    additional:additional.current?.innerText
+                } as appointment
+            )
+        }) 
+        .then(res => res.json())
+        .then(data => {
+            console.log("Removed the appointment", data);
+            setFeedBack(data.message);
+            setTimeout(() => {
+                setDaysAppointents(
+                    day_s_appointments.filter(app => app.slot !== data.slot )
+                );
+                setFeedBack("");
+            }, 1000);
+        })
+        .catch(error => console.error("Error occurred:", error));
+    }
+
     const handle_logout = async () => {
         const res = await fetch("http://localhost:3000/api/logout",{
             method:"GET",
@@ -226,7 +254,7 @@ const Manager = () => {
                     </div>  
                     <div>
                         <button onClick={handle_update}>Update</button><br />
-                        <button onClick={handle_register}>Remove</button>
+                        <button onClick={handle_remove}>Remove</button>
                     </div>
                 </div>
             </div>
@@ -293,7 +321,11 @@ const Manager = () => {
                     ? "3px solid #2f1b41" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
+                    {
+                        time_slots[i] === selected_slot && <span><Image src={active} alt={"active"}/></span>
+                    }
                     {time_slots[i]} {/* {day_s_appointments.length} */}
+                    
                 </button>
                 )
             }
