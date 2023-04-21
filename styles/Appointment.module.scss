@@ -99,7 +99,7 @@
             position: relative;
             button{
                 border: 2px solid #2f1b41;
-                color: #c50851;
+                color:#2f1b41;
                 width: 90px;
                 padding: 10px;
                 margin-bottom: 10px;
@@ -185,15 +185,18 @@
     }
     &_schedule{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 5px;
         &_each{
             border:1px solid #2f1b41;
-            height: 45px;
+            border-radius: 5px;
+            height: 65px;
             display: flex;
             justify-content: center;
             align-items: center;
             column-gap: 10px;
+            color: white;
+            font-size: 14px;
         }
     }
 }

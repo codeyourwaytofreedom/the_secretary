@@ -103,7 +103,7 @@
 }
 .detail_appointment #shell button {
   border: 2px solid #2f1b41;
-  color: #c50851;
+  color: #2f1b41;
   width: 90px;
   padding: 10px;
   margin-bottom: 10px;
@@ -203,15 +203,18 @@
 }
 .detail_schedule {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 5px;
 }
 .detail_schedule_each {
   border: 1px solid #2f1b41;
-  height: 45px;
+  border-radius: 5px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
   -moz-column-gap: 10px;
        column-gap: 10px;
+  color: white;
+  font-size: 14px;
 }/*# sourceMappingURL=Appointment.module.css.map */

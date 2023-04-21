@@ -123,6 +123,9 @@ const Manager = () => {
                 additional:additional.current?.innerText
             } as Appointment]);
             setFeedBack("Successfully added appointment");
+            setTimeout(() => {
+                setFeedBack("");
+            }, 1000);
         })
         .catch(error => console.error("Error occurred:", error));
     }
@@ -255,21 +258,31 @@ const Manager = () => {
             {
                 [...Array(16)].map((e,i)=>
                 <button suppressHydrationWarning className={a.detail_schedule_each} key={i} value={time_slots[i]} 
-                    style={{backgroundColor: new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
+                    style={{
+                    backgroundColor: 
+/*                     new Date("1970-01-01T" + time_slots[i] + "Z") < new Date("1970-01-01T" + currentTime + "Z") 
                     &&  new Date("1970-01-01T" + currentTime + "Z") <  new Date("1970-01-01T" + time_slots[i+1] + "Z") 
                     && 
                     selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}) === new Date().toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})
-                    ? "#c50851" : "rgb(222, 219, 219)",
+                    ? "#c50851" :  */
+                    day_s_appointments.filter((app:Appointment) => app.slot === time_slots[i]).length !== 0 
+                    ? "#c50851"
+                    :
+                    day_s_appointments.filter((app:Appointment) => app.slot === "temp").length === 1 
+                    ?
+                    "silver"
+                    :
+                    "#7fa99b",
                     border: time_slots[i] === selected_slot 
-                    ? "2px solid #c50851" : "1px solid #2f1b41"
+                    ? "3px solid #2f1b41" : "1px solid #2f1b41"
                     }}
                     onClick={(e)=>handle_appointment(e)}>
                     {
-                        day_s_appointments.filter((app:Appointment) => app.slot === "temp").length === 1 ?
+/*                         day_s_appointments.filter((app:Appointment) => app.slot === "temp").length === 1 ?
                         <span><Image src={loading} alt={"loading"}/></span> :
                         day_s_appointments.filter((app:Appointment) => app.slot === time_slots[i]).length !== 0 ?
                         <span><Image src={unavailable} alt={"booked"}/></span> :
-                        <span><Image src={available} alt={"available"}/></span>
+                        <span><Image src={available} alt={"available"}/></span> */
                     }
                     {time_slots[i]} {day_s_appointments.length}
                 </button>
