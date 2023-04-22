@@ -8,6 +8,7 @@ import add from "../public/add.png";
 import available from "../public/available.png";
 import unavailable from "../public/unavailable.png";
 import active from "../public/click.png";
+import Cookies from 'js-cookie';
 
 type appointment = {
     date: string,
@@ -70,7 +71,6 @@ const Manager = () => {
     };
     }, []);
 
-
     useEffect(() => {
         setDaysAppointents([
             {
@@ -84,8 +84,11 @@ const Manager = () => {
         const fetchData = async () => {
           const response = await fetch(`http://localhost:3000/api/retrieve?date=${selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}`);
           const data = await response.json();
+          if(response.status !== 200){
+            window.location.href = "/";
+          }
           setDaysAppointents(data);
-          console.log(data)
+          console.log(data,"here")
         };
         fetchData();
         if(expand){setExpand(false)}
@@ -96,7 +99,7 @@ const Manager = () => {
         selected_date.setMinutes(e.target.value?.split(":")[1])
         setSelectedSlot(e.target.value);
         setExpand(false);
-        setFeedBack("")
+        setFeedBack("");
     }
 
     const handle_register = async () => {
@@ -114,9 +117,12 @@ const Manager = () => {
                     } as appointment
                 )
             }) 
-            .then(res => res.json())
-            .then(data => {
-                console.log("Registered the appointment", data);
+            .then(res => {
+                console.log("Registered the appointment", res.json());
+                if(res.status !== 200){
+                    window.location.href = "/";
+                }
+                else{
                 setDaysAppointents([...day_s_appointments, {
                     date: selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"}),
                     slot:selected_slot,
@@ -128,6 +134,7 @@ const Manager = () => {
                 setTimeout(() => {
                     setFeedBack("");
                 }, 1000);
+                }
             })
             .catch(error => console.error("Error occurred:", error));
         }
@@ -163,6 +170,7 @@ const Manager = () => {
     }
 
     const handle_remove = async () => {
+        confirm("do you want to remove the appointment?")
         setFeedBack("Removing the appointment...")
         const res = await fetch("http://localhost:3000/api/remove",{
             method:"POST",

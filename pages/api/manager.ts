@@ -32,16 +32,18 @@ export default async function handler(
       
       if (result.modifiedCount === 1) {
         console.log('Successfully updated appointments array');
+        res.status(200).json({ app: 'Added appointment'});
       } else {
-        console.log('Unable to update appointments array');
+        console.log('Unable to add appointment');
+        res.status(503).json({ app: 'Bad request...'});
       }
 
     } catch (db_error) {
-      console.log(db_error)
+      console.log(db_error);
+      res.status(503).json({ app: 'Bad request...'});
     }
   } catch (jwt_verf_error) {
-    console.log(jwt_verf_error)
+    console.log(jwt_verf_error);
+    res.status(401).json({ message: "Access denied! Invalid Credentials"});
   }
-  
-  res.status(200).json({ app: 'Appointment Manager' });
 }
