@@ -52,7 +52,8 @@ export default async function handler(
       res.status(503).json({ message: "Unable to connect! Please check your internet connection and try again later.", error:db_error });
     }
   } catch (jwt_verf_error) {
-    console.log(jwt_verf_error)
+    console.log(jwt_verf_error);
+    res.status(401).json({message:"Please log in..."})
   }
 
 }

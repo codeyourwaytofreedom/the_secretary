@@ -102,10 +102,10 @@ const Manager = () => {
         setFeedBack("");
     }
 
-    const handle_register = async () => {
+    const handle_add = async () => {
         if(patient.current!.innerText.length > 10 && appoint_for.current!.innerText.length > 5){
             setFeedBack("Adding a new appointment...")
-            const res = await fetch("http://localhost:3000/api/manager",{
+            const res = await fetch("http://localhost:3000/api/add",{
                 method:"POST",
                 body:JSON.stringify(
                     {
@@ -158,14 +158,22 @@ const Manager = () => {
                 } as appointment
             )
         }) 
-        .then(res => res.json())
+        .then(res => res.json()
         .then(data => {
+            console.log(res.status)
             console.log("Updated the appointment", data);
-            setFeedBack(data.message);
-            setTimeout(() => {
-                setFeedBack("");
-            }, 1000);
-        })
+            if(res.status === 401){
+                confirm("Session Expired! Please log in...")
+                window.location.href = "/"
+            }
+            else{
+                setFeedBack(data.message);
+                setTimeout(() => {
+                    setFeedBack("");
+                }, 1000);
+            }
+
+        }))
         .catch(error => console.error("Error occurred:", error));
     }
 
@@ -184,17 +192,24 @@ const Manager = () => {
                 } as appointment
             )
         }) 
-        .then(res => res.json())
+        .then(res => res.json()
         .then(data => {
             console.log("Removed the appointment", data);
-            setFeedBack(data.message);
-            setTimeout(() => {
-                setDaysAppointents(
-                    day_s_appointments.filter(app => app.slot !== data.slot )
-                );
-                setFeedBack("");
-            }, 1000);
-        })
+            if(res.status === 401){
+                confirm("Session Expired! Please log in...")
+                window.location.href = "/"
+            }
+            else{
+                setFeedBack(data.message);
+                setTimeout(() => {
+                    setDaysAppointents(
+                        day_s_appointments.filter(app => app.slot !== data.slot )
+                    );
+                    setFeedBack("");
+                }, 1000);
+            }
+
+        }))
         .catch(error => console.error("Error occurred:", error));
     }
 
@@ -305,7 +320,7 @@ const Manager = () => {
                     <div contentEditable id={a.additional} ref={additional}></div>
                 </div>  
                 <div>
-                    <button onClick={handle_register}>Add</button>
+                    <button onClick={handle_add}>Add</button>
                 </div>
                 </>
             }

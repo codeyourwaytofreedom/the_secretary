@@ -42,7 +42,7 @@ export default async function handler(
         res.status(200).json({ message: 'Appointment updated successfully.' });
       } else {
         console.log("Failed to update appointment.");
-        res.json({ message: 'No change detected....' });
+        res.status(503).json({ message: 'No change detected....' });
       }
 
     } catch (db_error) {
@@ -51,6 +51,7 @@ export default async function handler(
     }
   } catch (jwt_verf_error) {
     console.log(jwt_verf_error)
+    res.status(401).json({message:"Please log in..."})
   }
 
 }
