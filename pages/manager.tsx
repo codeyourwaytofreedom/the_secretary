@@ -26,14 +26,14 @@ const Manager = () => {
     const endTime = new Date();
     endTime.setHours(18, 0, 0, 0);
 
-    const time_slots:string[] = ["9:00"];
+    const time_slots:string[] = [];
 
     for (var time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
         time_slots.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit',hour12: false}))
     }
     
     const [selected_date, setDate] = useState<Date>(new Date());
-    const [selected_slot, setSelectedSlot] = useState<string>("9:00");
+    const [selected_slot, setSelectedSlot] = useState<string>("");
     const [currentTime, setCurrentTime] = 
                         useState<string>(new Date().toLocaleTimeString("tr-TR",{hour: "2-digit",minute: "2-digit"}));
 
@@ -178,7 +178,7 @@ const Manager = () => {
     }
 
     const handle_remove = async () => {
-        confirm("do you want to remove the appointment?")
+        if (confirm("do you want to remove the appointment?")){
         setFeedBack("Removing the appointment...")
         const res = await fetch("http://localhost:3000/api/remove",{
             method:"POST",
@@ -206,11 +206,13 @@ const Manager = () => {
                         day_s_appointments.filter(app => app.slot !== data.slot )
                     );
                     setFeedBack("");
+                    setExpand(false);
                 }, 1000);
             }
 
         }))
         .catch(error => console.error("Error occurred:", error));
+    }
     }
 
     const handle_logout = async () => {
@@ -241,7 +243,7 @@ const Manager = () => {
         <h1>{selected_date && selected_date.toLocaleDateString("tr-TR", {day: "2-digit",month: "2-digit",year: "numeric"})}</h1>
         {
             /* new Date().toDateString() === selected_date.toDateString() &&  */
-           day_s_appointments.filter((app:Appointment) => app.slot === selected_slot).length !== 0 
+           day_s_appointments!.filter((app:Appointment) => app.slot === selected_slot).length !== 0 
            ?
             <div className={a.detail_appointment}>
                 <div id={a.shell}>
